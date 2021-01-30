@@ -34,4 +34,12 @@ public class GameManager : SystemSingleton<GameManager>
             m_player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         }
     }
+
+    //------- Helpers -------
+    public Vector3 GetMouseWorldPos()
+    {
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos = new Vector3(pos.x, pos.y, 0);
+        return pos;
+    }
 }
