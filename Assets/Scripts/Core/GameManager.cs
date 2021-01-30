@@ -6,6 +6,11 @@ public class GameManager : SystemSingleton<GameManager>
 {
     private GameObject m_player;
 
+    public GameObject GetPlayer()
+    {
+        return m_player;
+    }
+
     protected override void Awake()
     {
         base.Awake();
