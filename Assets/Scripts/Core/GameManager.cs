@@ -31,7 +31,7 @@ public class GameManager : SystemSingleton<GameManager>
         if(!m_player)
         {
             GameObject playerPrefab = Resources.Load<GameObject>("player");
-            Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+            m_player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         }
     }
 }
