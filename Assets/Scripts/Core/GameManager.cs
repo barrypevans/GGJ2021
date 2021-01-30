@@ -14,5 +14,6 @@ public class GameManager : SystemSingleton<GameManager>
     {
         //Init your subsystem here!
         FXManager.Init();
+        CameraManager.Init();
     }
 }
