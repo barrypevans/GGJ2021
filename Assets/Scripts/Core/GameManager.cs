@@ -5,10 +5,13 @@ using UnityEngine;
 public class GameManager : SystemSingleton<GameManager>
 {
     private GameObject m_player;
+    private GameObject m_enemies;
 
     private GameObject uiPrefab;
     private GameObject mainMenuPanel;
     private GameObject gameplayPanel;
+
+    public GameObject enemyPrefab;
 
     [SerializeField] private bool m_debug;
 
@@ -51,6 +54,14 @@ public class GameManager : SystemSingleton<GameManager>
         }
     }
 
+    private void SpawnEnemies()
+    {
+        if(!m_enemies)
+        {
+            //GameObject enemyPrefab = Resources.Load<GameObject>("Gargoyle");
+            m_enemies = Instantiate(enemyPrefab, Vector3.zero, Quaternion.identity);
+        }
+    }
 
     //Function to be called to start a new game
     //Currently, OnClick calls this directly.  Bad form?
@@ -65,6 +76,7 @@ public class GameManager : SystemSingleton<GameManager>
         SpawnPlayer(); //Spawns the player
 
         //Spawn enemies
+        SpawnEnemies();
     }
 
     //------- Helpers -------
