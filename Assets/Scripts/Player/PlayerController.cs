@@ -20,6 +20,12 @@ public class PlayerController : MonoBehaviour
     private LateralDirection lateralDirection = LateralDirection.kNone;
     private bool isJump = false;
 
+
+    [SerializeField]
+    private float kRisingGravity  = .1f;
+    [SerializeField]
+    private float kFallingGravity = .1f;
+
     void Awake()
     {
         m_rigidbody = GetComponent<Rigidbody2D>();
@@ -71,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null)
             {
-                m_rigidbody.AddForce(Vector2.up * jumpForce);
+                m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x, jumpForce);
             }
             isJump = false;
         }
