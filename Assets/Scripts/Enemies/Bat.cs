@@ -105,13 +105,24 @@ public class Bat : Enemy
 
     private void MoveToAttack(Vector3 toTarget)
     {
-        Debug.Log(toTarget.magnitude);
         if (toTarget.magnitude < 4)
         {
             State = EnemyState.MovingToPosition;
             SetCurrentTarget(m_hoverTarget);
-            Debug.Log("flee");
         }
         m_rigidbody.AddForce(toTarget.normalized * _kAccel);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.name.Contains("bullet"))
+        {
+            gameObject.SetActive(false);
+            collision.gameObject.SetActive(false);
+        } else if(collision.gameObject.name.Contains("player"))
+        {
+            //GameManager.Get().GetPlayer().PlayerHit();
+            gameObject.SetActive(false);
+        }
     }
 }
