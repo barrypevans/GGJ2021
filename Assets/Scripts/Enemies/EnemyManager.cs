@@ -33,7 +33,10 @@ public class EnemyManager : SystemSingleton<EnemyManager>
     public void SetLocations()
     {
         SpawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint").Select(a=>a.transform).ToArray();
-        TargetLocations = GameObject.FindGameObjectsWithTag("TargetPoint").Select(a => a.transform).ToArray();
+        var targets = GameObject.FindGameObjectsWithTag("TargetPoint");
+        foreach (var target in targets)
+            target.AddComponent<HoverTarget>();
+        TargetLocations = targets.Select(a => a.transform).ToArray();
     }
 
     public void StartFirstWave()
