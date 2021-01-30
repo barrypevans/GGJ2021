@@ -8,7 +8,7 @@ public class HoverTarget : MonoBehaviour
     public float Period = 5;
     public float Offset = Mathf.PI;
 
-    private float m_speed = 0.5f;
+    private float m_speed = 2f;
 
     private Vector2 m_origin;
     // Start is called before the first frame update
