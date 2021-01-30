@@ -31,6 +31,12 @@ public class PlayerController : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        //Spawn the gun
+        Instantiate(Resources.Load<GameObject>("Gun"), transform.position, Quaternion.identity);
+    }
+
     void Update()
     {
         //Keyboard input for left/right movement
@@ -48,12 +54,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //Keyboard input for jumping
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             isJump = true;
         }
 
         m_rigidbody.gravityScale = m_rigidbody.velocity.y > 0 ? kRisingGravity : kFallingGravity;
+        Debug.DrawRay(transform.position, Vector3.down*.55f, Color.red);
     }
 
     void FixedUpdate()
@@ -75,14 +82,18 @@ public class PlayerController : MonoBehaviour
         //Jumps if the jump key was pressed
         if (isJump)
         {
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.55F);
+            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, Vector2.one, 0, Vector2.down, 0.55F);
                 
-            if (hit.collider != null)
+            foreach(var hit in hits)
             {
-                m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x, jumpForce);
+                if (hit.collider.gameObject != gameObject)
+                    m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x, jumpForce);
+
             }
+            
             isJump = false;
         }
     }
+
 }
 

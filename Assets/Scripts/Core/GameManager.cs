@@ -43,6 +43,7 @@ public class GameManager : SystemSingleton<GameManager>
         }
     }
 
+
     //Function to be called to start a new game
     //Currently, OnClick calls this directly.  Bad form?
     public void StartGameplay()
@@ -54,5 +55,14 @@ public class GameManager : SystemSingleton<GameManager>
 
         InitSystems();
         SpawnPlayer();
+    }
+
+    //------- Helpers -------
+    public Vector3 GetMouseWorldPos()
+    {
+        Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        pos = new Vector3(pos.x, pos.y, 0);
+        return pos;
+
     }
 }
