@@ -7,10 +7,6 @@ public class GameManager : SystemSingleton<GameManager>
     private GameObject m_player;
     private GameObject m_enemies;
 
-    private GameObject uiPrefab;
-    private GameObject mainMenuPanel;
-    private GameObject gameplayPanel;
-
     public GameObject enemyPrefab;
 
     [SerializeField] private bool m_debug;
@@ -23,19 +19,12 @@ public class GameManager : SystemSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        if (m_debug)
-        {
-            InitSystems();
+       
+    }
 
-            SpawnPlayer();
-        }
-        else
-        {
-            uiPrefab = GameObject.Find("UIPrefab"); //Finds the UI prefab
-            mainMenuPanel = GameObject.Find("MainMenuPanel");
-            gameplayPanel = GameObject.Find("GameplayPanel");
-            gameplayPanel.SetActive(false);
-        }
+    private void Start()
+    {
+        InitSystems();
     }
 
     private void InitSystems()
@@ -43,6 +32,8 @@ public class GameManager : SystemSingleton<GameManager>
         //Init your subsystem here!
         FXManager.Init();
         CameraManager.Init();
+        EnemyManager.Init();
+        UiManager.Init();
     }
 
     private void SpawnPlayer()
@@ -54,29 +45,16 @@ public class GameManager : SystemSingleton<GameManager>
         }
     }
 
-    private void SpawnEnemies()
-    {
-        if(!m_enemies)
-        {
-            //GameObject enemyPrefab = Resources.Load<GameObject>("Gargoyle");
-            m_enemies = Instantiate(enemyPrefab, Vector3.zero, Quaternion.identity);
-        }
-    }
-
     //Function to be called to start a new game
     //Currently, OnClick calls this directly.  Bad form?
     public void StartGameplay()
     {
-        mainMenuPanel.SetActive(false);  //Hides the main menu
-        gameplayPanel.SetActive(true);  //Unhides the gameplay UI
-
         //Change to gameplay music
-
-        InitSystems();
         SpawnPlayer(); //Spawns the player
 
-        //Spawn enemies
-        SpawnEnemies();
+        UiManager.Get().ShowGameplayPanel();
+
+        //EnemyManager.Get().StartFirstWave();
     }
 
     //------- Helpers -------
@@ -85,6 +63,5 @@ public class GameManager : SystemSingleton<GameManager>
         Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         pos = new Vector3(pos.x, pos.y, 0);
         return pos;
-
     }
 }

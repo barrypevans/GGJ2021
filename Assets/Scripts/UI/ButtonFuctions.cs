@@ -4,21 +4,10 @@ using UnityEngine;
 
 public class ButtonFuctions : MonoBehaviour
 {
-    //private GameObject uiPrefab;
-    private GameObject gameManager;
-
-    // Start is called before the first frame update
-    void Start()
+    public void StartGameplay()
     {
-        //uiPrefab = GameObject.Find("UIPrefab");
-        gameManager = GameObject.Find("game-manager");
+        GameManager.Get().StartGameplay();
     }
-
-    /*public void PlayGame()
-    {
-        //Debug.Log("Playing Game");
-        //Start playing the game somehow - need to coordinate
-    }*/
 
     public void ExitApplication()
     {
