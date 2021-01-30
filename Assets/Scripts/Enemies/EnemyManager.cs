@@ -10,18 +10,24 @@ public class EnemyManager : SystemSingleton<EnemyManager>
 
     private GameObject m_batPrefab;
     public Transform PlayerPosition;
-    public bool Debug;
+    public bool IsDebug;
     private int BatsPerWave = 10;
     private List<GameObject> _bats = new List<GameObject>();
+    private bool _isWaveFullySpawned;
+    private IEnumerator _spawningCoroutine;
+    private IEnumerator _attackingCoroutine;
+
+    private int _wave = 0; // manage this in game manager?
+
     // Start is called before the first frame update
     void Start()
     {
         m_batPrefab = Resources.Load<GameObject>("Gargoyle");
 
-        if (Debug)
+        if (IsDebug)
         {
             SetLocations();
-            StartFirstWave();
+            StartWave();
         }
     }
 
@@ -39,15 +45,30 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         TargetLocations = targets.Select(a => a.transform).ToArray();
     }
 
-    public void StartFirstWave()
+    public void StartWave(int wave = 0) // change bat properties based on wave?
     {
-        StartCoroutine(SpawnBats());
+        Debug.Log("Starting wave: " + wave);
+        _isWaveFullySpawned = false;
+        switch (wave)
+        {
+            case 0:
+                _spawningCoroutine = SpawnBats(20);
+                break;
+            case 1:
+                _spawningCoroutine = SpawnBats(40);
+                break;
+            case 2:
+                _spawningCoroutine = SpawnBats(60);
+                break;
+        }
+        StartCoroutine(_spawningCoroutine);
     }
 
-    IEnumerator SpawnBats()
+    IEnumerator SpawnBats(int totalBatCount)
     {
-        StartCoroutine(BatAttack());
-        for (int j = 0; j < 50; j++) {
+        _attackingCoroutine = BatAttack();
+        StartCoroutine(_attackingCoroutine);
+        for (int j = 0; j < totalBatCount / BatsPerWave; j++) {
             int spawnLoc = Random.Range(0, SpawnLocations.Length);
             int targetLoc = Random.Range(0, TargetLocations.Length);
             for (int i = 0; i < BatsPerWave; i++)
@@ -58,21 +79,30 @@ public class EnemyManager : SystemSingleton<EnemyManager>
                 yield return new WaitForSeconds(.2f);
             }
         }
-
+        _isWaveFullySpawned = true;
     }
 
     IEnumerator BatAttack()
     {
         while (true)
         {
-            var eligibleGargoyles = _bats.Where(a => 
+            if (_isWaveFullySpawned && _bats.Count == 0)
+            {
+                // GameManager.Get().WaveCompleted();
+                Debug.Log("Wave completed");
+                yield return new WaitForSeconds(5f);
+                StartWave(++_wave);
+                StopCoroutine(_attackingCoroutine);
+            }
+
+            var eligibleBats = _bats.Where(a => 
                 a.GetComponent<Bat>().State == Bat.EnemyState.InPosition &&
                 a.activeSelf).ToList();
-            if (eligibleGargoyles.Count == 0) yield return new WaitForSeconds(Random.Range(1, 4));
+            if (eligibleBats.Count == 0) yield return new WaitForSeconds(Random.Range(1, 4));
             else
             {
-                var gargoyle = eligibleGargoyles[Random.Range(0, eligibleGargoyles.Count)];
-                gargoyle.GetComponent<Bat>().Attack();
+                var bat = eligibleBats[Random.Range(0, eligibleBats.Count)];
+                bat.GetComponent<Bat>().Attack();
                 yield return new WaitForSeconds(Random.Range(1, 4));
             }
         }
