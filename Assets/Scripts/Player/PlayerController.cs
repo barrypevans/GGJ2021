@@ -2,36 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody2D rb;
+    enum LateralDirection
+    {
+        kLeft,
+        kRight,
+        kNone
+    }
+
+    private Rigidbody2D m_rigidbody;
 
     public float jumpForce;
     public float lateralSpeed;
 
-    private string lateralDirection = "none";
+    private LateralDirection lateralDirection = LateralDirection.kNone;
     private bool isJump = false;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         //Keyboard input for left/right movement
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
-            lateralDirection = "left";
+            lateralDirection = LateralDirection.kLeft;
         }
         else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            lateralDirection = "right";
+            lateralDirection = LateralDirection.kRight;
         }
         else
         {
-            lateralDirection = "none";
+            lateralDirection = LateralDirection.kNone;
         }
 
         //Keyboard input for jumping
@@ -46,14 +53,14 @@ public class PlayerController : MonoBehaviour
         //Sets players lateral velocity
         switch (lateralDirection)
         {
-            case "left":
-                rb.velocity = lateralSpeed * Vector2.left;//new Vector2(-1, 0);
+            case LateralDirection.kLeft:
+                m_rigidbody.velocity = lateralSpeed * Vector2.left;//new Vector2(-1, 0);
                 break;
-            case "right":
-                rb.velocity = lateralSpeed * Vector2.right;//new Vector2(1, 0);
+            case LateralDirection.kRight:
+                m_rigidbody.velocity = lateralSpeed * Vector2.right;//new Vector2(1, 0);
                 break;
             default:
-                rb.velocity = Vector2.zero;//new Vector2(0, 0);
+                m_rigidbody.velocity = Vector2.zero;//new Vector2(0, 0);
                 break;
         }
 
@@ -64,7 +71,7 @@ public class PlayerController : MonoBehaviour
 
             if (hit.collider != null)
             {
-                rb.AddForce(Vector2.up * jumpForce);
+                m_rigidbody.AddForce(Vector2.up * jumpForce);
             }
             isJump = false;
         }
