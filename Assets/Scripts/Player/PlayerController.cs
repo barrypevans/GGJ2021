@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D m_rigidbody;
 
     public float jumpForce;
-    public float lateralSpeed;
+    public float lateralSpeed = 10;
 
     private LateralDirection lateralDirection = LateralDirection.kNone;
     private bool isJump = false;
