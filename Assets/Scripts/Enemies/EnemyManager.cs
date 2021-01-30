@@ -30,15 +30,15 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         for (int i = 0; i < MaxGargoyles; i++)
         {
             var gargoyle = Instantiate(GargoylePrefab, SpawnLocations[0].position, Quaternion.identity);
-            gargoyle.GetComponent<Gargoyle>().SetTarget(Target1);
-            gargoyle.GetComponent<Gargoyle>().Direction = -1;
+            gargoyle.GetComponent<Bat>().SetTarget(Target1);
+            gargoyle.GetComponent<Bat>().Direction = -1;
             _gargoyles.Add(gargoyle);
             yield return new WaitForSeconds(.5f);
         }
         for (int i = 0; i < MaxGargoyles; i++)
         {
             var gargoyle = Instantiate(GargoylePrefab, SpawnLocations[0].position, Quaternion.identity);
-            gargoyle.GetComponent<Gargoyle>().SetTarget(Target2);
+            gargoyle.GetComponent<Bat>().SetTarget(Target2);
             _gargoyles.Add(gargoyle);
             yield return new WaitForSeconds(.5f);
         }
@@ -50,9 +50,9 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         while (true)
         {
             var eligibleGargoyles = _gargoyles.Where(a => 
-                a.GetComponent<Gargoyle>().State == Gargoyle.EnemyState.InPosition).ToList();
+                a.GetComponent<Bat>().State == Bat.EnemyState.InPosition).ToList();
             var gargoyle = eligibleGargoyles[Random.Range(0, eligibleGargoyles.Count)];
-            gargoyle.GetComponent<Gargoyle>().Attack();
+            gargoyle.GetComponent<Bat>().Attack();
             yield return new WaitForSeconds(Random.Range(1, 4));
         }
     }
