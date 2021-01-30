@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -7098996294594471016}
   m_Layer: 0
   m_Name: Gargoyle
-  m_TagString: Untagged
+  m_TagString: Bat
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   State: 0
-  Direction: 1
   m_player: {fileID: 0}
 --- !u!58 &1728779096
 CircleCollider2D:
