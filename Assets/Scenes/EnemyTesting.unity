@@ -405,7 +405,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SpawnLocations:
-  - {fileID: 0}
+  - {fileID: 183968927}
+  GargoylePrefab: {fileID: 7196282720567299212, guid: 3c11bc6333135d04f8e1d114b214e3d0, type: 3}
+  MaxGargoyles: 25
 --- !u!4 &1955613012
 Transform:
   m_ObjectHideFlags: 0
