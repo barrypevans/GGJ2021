@@ -10,6 +10,8 @@ public class GameManager : SystemSingleton<GameManager>
     private GameObject mainMenuPanel;
     private GameObject gameplayPanel;
 
+    [SerializeField] private bool m_debug;
+
     public GameObject GetPlayer()
     {
         return m_player;
@@ -18,13 +20,19 @@ public class GameManager : SystemSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        //InitSystems();
+        if (m_debug)
+        {
+            InitSystems();
 
-        //SpawnPlayer();
-        uiPrefab = GameObject.Find("UIPrefab"); //Finds the UI prefab
-        mainMenuPanel = GameObject.Find("MainMenuPanel");
-        gameplayPanel = GameObject.Find("GameplayPanel");
-        gameplayPanel.SetActive(false);
+            SpawnPlayer();
+        }
+        else
+        {
+            uiPrefab = GameObject.Find("UIPrefab"); //Finds the UI prefab
+            mainMenuPanel = GameObject.Find("MainMenuPanel");
+            gameplayPanel = GameObject.Find("GameplayPanel");
+            gameplayPanel.SetActive(false);
+        }
     }
 
     private void InitSystems()
@@ -36,7 +44,7 @@ public class GameManager : SystemSingleton<GameManager>
 
     private void SpawnPlayer()
     {
-        if(!m_player)
+        if (!m_player)
         {
             GameObject playerPrefab = Resources.Load<GameObject>("player");
             m_player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);

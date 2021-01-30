@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private LateralDirection lateralDirection = LateralDirection.kNone;
     private bool isJump = false;
-
+    private bool m_isGrounded = true;
 
     [SerializeField]
     private float kRisingGravity  = .1f;
@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        GroundCheck();
         //Keyboard input for left/right movement
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
@@ -80,18 +81,31 @@ public class PlayerController : MonoBehaviour
         }
 
         //Jumps if the jump key was pressed
-        if (isJump)
+        if (isJump && m_isGrounded)
         {
-            RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, Vector2.one, 0, Vector2.down, 0.55F);
-                
-            foreach(var hit in hits)
-            {
-                if (hit.collider.gameObject != gameObject)
-                    m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x, jumpForce);
-
-            }
-            
+            m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x, jumpForce);
             isJump = false;
+        }
+    }
+
+
+    public bool IsGrounded()
+    {
+        return m_isGrounded;
+    }
+
+    private void GroundCheck()
+    {
+        m_isGrounded = false;
+        RaycastHit2D[] hits = Physics2D.BoxCastAll(transform.position, Vector2.one, 0, Vector2.down, 0.55F);
+
+        foreach (var hit in hits)
+        {
+            if (hit.collider.gameObject != gameObject)
+            {
+                m_isGrounded = true;
+                return;
+            }
         }
     }
 
