@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
+    public Transform[] SpawnLocations;
     // Start is called before the first frame update
     void Start()
     {

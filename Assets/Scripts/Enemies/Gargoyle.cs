@@ -13,6 +13,6 @@ public class Gargoyle : Enemy
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = new Vector2(transform.position.x, transform.position.y - Time.deltaTime * 2f);
     }
 }
