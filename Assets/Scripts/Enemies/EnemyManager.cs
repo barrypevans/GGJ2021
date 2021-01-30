@@ -5,49 +5,64 @@ using System.Linq;
 
 public class EnemyManager : SystemSingleton<EnemyManager>
 {
-    public Transform[] SpawnLocations;
-    private GameManager _gm;
-    public GameObject GargoylePrefab;
+    private Transform[] SpawnLocations;
+    private Transform[] TargetLocations;
+
+    private GameObject m_batPrefab;
     public Transform PlayerPosition;
-
-    public Transform Target1;
-    public Transform Target2;
-
-    private bool _isPlayerSet = false;
-
-    public int MaxGargoyles = 10;
-    private List<GameObject> _gargoyles = new List<GameObject>();
+    public bool Debug;
+    private int BatsPerWave = 10;
+    private List<GameObject> _bats = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
-        GargoylePrefab = Resources.Load<GameObject>("Gargoyle");
-        _gm = GameManager.Get();
-        StartCoroutine(SpawnGargoyles());
+        m_batPrefab = Resources.Load<GameObject>("Gargoyle");
+
+        if (Debug)
+        {
+            SetLocations();
+            StartFirstWave();
+        }
     }
 
-    IEnumerator SpawnGargoyles()
+    public List<GameObject> GetBats()
     {
-        StartCoroutine(GargoyleAttack());
+        return _bats;
+    }
+
+    public void SetLocations()
+    {
+        SpawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint").Select(a=>a.transform).ToArray();
+        TargetLocations = GameObject.FindGameObjectsWithTag("TargetPoint").Select(a => a.transform).ToArray();
+    }
+
+    public void StartFirstWave()
+    {
+        StartCoroutine(SpawnBats());
+    }
+
+    IEnumerator SpawnBats()
+    {
+        StartCoroutine(BatAttack());
         for (int j = 0; j < 50; j++) {
             int spawnLoc = Random.Range(0, SpawnLocations.Length);
-            int targetLoc = Random.Range(0, 2);
-            for (int i = 0; i < MaxGargoyles; i++)
+            int targetLoc = Random.Range(0, TargetLocations.Length);
+            for (int i = 0; i < BatsPerWave; i++)
             {
-                var gargoyle = Instantiate(GargoylePrefab, SpawnLocations[spawnLoc].position, Quaternion.identity);
-                gargoyle.GetComponent<Bat>().SetTarget(targetLoc == 0 ? Target1 : Target2);
-                gargoyle.GetComponent<Bat>().Direction = -1;
-                _gargoyles.Add(gargoyle);
+                var bat = Instantiate(m_batPrefab, SpawnLocations[spawnLoc].position, Quaternion.identity);
+                bat.GetComponent<Bat>().SetTarget(TargetLocations[targetLoc]);
+                _bats.Add(bat);
                 yield return new WaitForSeconds(.2f);
             }
         }
 
     }
 
-    IEnumerator GargoyleAttack()
+    IEnumerator BatAttack()
     {
         while (true)
         {
-            var eligibleGargoyles = _gargoyles.Where(a => 
+            var eligibleGargoyles = _bats.Where(a => 
                 a.GetComponent<Bat>().State == Bat.EnemyState.InPosition &&
                 a.activeSelf).ToList();
             if (eligibleGargoyles.Count == 0) yield return new WaitForSeconds(Random.Range(1, 4));
@@ -57,16 +72,6 @@ public class EnemyManager : SystemSingleton<EnemyManager>
                 gargoyle.GetComponent<Bat>().Attack();
                 yield return new WaitForSeconds(Random.Range(1, 4));
             }
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(!_isPlayerSet)
-        {
-            _gm.GetPlayer().transform.position = PlayerPosition.position;
-            _isPlayerSet = true;
         }
     }
 }

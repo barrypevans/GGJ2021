@@ -20,8 +20,6 @@ public class Bat : Enemy
     private float _kAccel = 40f;
     private float _kMaxVelocity = 10f;
 
-    public int Direction = 1;
-
     public Transform m_player;
 
     private const float MaxTargetOffset = 1.5f;
@@ -105,7 +103,7 @@ public class Bat : Enemy
 
     private void MoveToAttack(Vector3 toTarget)
     {
-        if (toTarget.magnitude < 4)
+        if (toTarget.magnitude < 2)
         {
             State = EnemyState.MovingToPosition;
             SetCurrentTarget(m_hoverTarget);
@@ -113,16 +111,19 @@ public class Bat : Enemy
         m_rigidbody.AddForce(toTarget.normalized * _kAccel);
     }
 
+    // Create Bat Destroyed method
+    public void Kill()
+    {
+        EnemyManager.Get().GetBats().Remove(gameObject);
+        Destroy(gameObject);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name.Contains("bullet"))
-        {
-            gameObject.SetActive(false);
-            collision.gameObject.SetActive(false);
-        } else if(collision.gameObject.name.Contains("player"))
+        if(collision.gameObject.name.Contains("player"))
         {
             //GameManager.Get().GetPlayer().PlayerHit();
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         }
     }
 }
