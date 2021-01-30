@@ -18,6 +18,5 @@ public class SquashAndStretcher : MonoBehaviour
         float squashAmount = Mathf.Lerp(1, .9f, t);
         squashAmount = m_rigidbody.velocity.y > 0 ? squashAmount : 1 / squashAmount;
         transform.localScale = new Vector3(squashAmount, 1 / squashAmount, 1);
-
     }
 }
