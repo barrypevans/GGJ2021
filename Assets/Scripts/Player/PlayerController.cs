@@ -14,11 +14,16 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D m_rigidbody;
 
-    public float jumpForce;
-    public float lateralSpeed;
+    public float jumpForce      = 30.0f;
+    public float lateralSpeed   = 5.0f;
 
     private LateralDirection lateralDirection = LateralDirection.kNone;
     private bool isJump = false;
+
+    [SerializeField]
+    private float kRisingGravity  = 10;
+    [SerializeField]
+    private float kFallingGravity = 20;
 
     void Awake()
     {
@@ -46,6 +51,8 @@ public class PlayerController : MonoBehaviour
         {
             isJump = true;
         }
+
+        UpdateGravityMultiplier();
     }
 
     void FixedUpdate()
@@ -75,6 +82,11 @@ public class PlayerController : MonoBehaviour
             }
             isJump = false;
         }
+    }
+
+    void UpdateGravityMultiplier()
+    {
+        m_rigidbody.gravityScale = m_rigidbody.velocity.y > 0 ? kRisingGravity : kFallingGravity;
     }
 }
 
