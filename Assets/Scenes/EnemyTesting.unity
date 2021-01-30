@@ -499,8 +499,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 1782863284}
-  jumpForce: 0
-  lateralSpeed: 0
+  jumpForce: 1
+  lateralSpeed: 10
 --- !u!50 &1782863284
 Rigidbody2D:
   serializedVersion: 4
@@ -516,7 +516,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
