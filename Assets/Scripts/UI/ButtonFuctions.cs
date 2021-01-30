@@ -4,22 +4,21 @@ using UnityEngine;
 
 public class ButtonFuctions : MonoBehaviour
 {
-    private GameObject uiPrefab;
+    //private GameObject uiPrefab;
+    private GameObject gameManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        uiPrefab = GameObject.Find("UIPrefab");
+        //uiPrefab = GameObject.Find("UIPrefab");
+        gameManager = GameObject.Find("game-manager");
     }
 
-    public void PlayGame()
+    /*public void PlayGame()
     {
-        Debug.Log("Playing Game");
+        //Debug.Log("Playing Game");
         //Start playing the game somehow - need to coordinate
-
-        uiPrefab.SetActive(false); //optional way of hiding ui
-        //May be handled by something else
-    }
+    }*/
 
     public void ExitApplication()
     {

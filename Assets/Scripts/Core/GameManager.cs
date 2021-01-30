@@ -6,6 +6,10 @@ public class GameManager : SystemSingleton<GameManager>
 {
     private GameObject m_player;
 
+    private GameObject uiPrefab;
+    private GameObject mainMenuPanel;
+    private GameObject gameplayPanel;
+
     public GameObject GetPlayer()
     {
         return m_player;
@@ -14,9 +18,13 @@ public class GameManager : SystemSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-        InitSystems();
+        //InitSystems();
 
-        SpawnPlayer();
+        //SpawnPlayer();
+        uiPrefab = GameObject.Find("UIPrefab"); //Finds the UI prefab
+        mainMenuPanel = GameObject.Find("MainMenuPanel");
+        gameplayPanel = GameObject.Find("GameplayPanel");
+        gameplayPanel.SetActive(false);
     }
 
     private void InitSystems()
@@ -33,5 +41,18 @@ public class GameManager : SystemSingleton<GameManager>
             GameObject playerPrefab = Resources.Load<GameObject>("player");
             m_player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
         }
+    }
+
+    //Function to be called to start a new game
+    //Currently, OnClick calls this directly.  Bad form?
+    public void StartGameplay()
+    {
+        mainMenuPanel.SetActive(false);
+        gameplayPanel.SetActive(true);
+
+        //Change to gameplay music
+
+        InitSystems();
+        SpawnPlayer();
     }
 }
