@@ -48,13 +48,15 @@ public class GameManager : SystemSingleton<GameManager>
     //Currently, OnClick calls this directly.  Bad form?
     public void StartGameplay()
     {
-        mainMenuPanel.SetActive(false);
-        gameplayPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);  //Hides the main menu
+        gameplayPanel.SetActive(true);  //Unhides the gameplay UI
 
         //Change to gameplay music
 
         InitSystems();
-        SpawnPlayer();
+        SpawnPlayer(); //Spawns the player
+
+        //Spawn enemies
     }
 
     //------- Helpers -------
