@@ -23,6 +23,8 @@ public class SystemSingleton<T> : MonoBehaviour where T : SystemSingleton<T>
     {
         if (g_instance != null)
         {
+            // If there is already and instance created,
+            // Destory this extra instance
             Destroy(gameObject);
             return;
         }
