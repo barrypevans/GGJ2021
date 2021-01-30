@@ -52,6 +52,8 @@ public class PlayerController : MonoBehaviour
         {
             isJump = true;
         }
+
+        m_rigidbody.gravityScale = m_rigidbody.velocity.y > 0 ? kRisingGravity : kFallingGravity;
     }
 
     void FixedUpdate()
@@ -60,13 +62,13 @@ public class PlayerController : MonoBehaviour
         switch (lateralDirection)
         {
             case LateralDirection.kLeft:
-                m_rigidbody.velocity = lateralSpeed * Vector2.left;//new Vector2(-1, 0);
+                m_rigidbody.velocity = new Vector2(-lateralSpeed, m_rigidbody.velocity.y);
                 break;
             case LateralDirection.kRight:
-                m_rigidbody.velocity = lateralSpeed * Vector2.right;//new Vector2(1, 0);
+                m_rigidbody.velocity = new Vector2(lateralSpeed, m_rigidbody.velocity.y);
                 break;
             default:
-                m_rigidbody.velocity = Vector2.zero;//new Vector2(0, 0);
+                m_rigidbody.velocity = new Vector2(0, m_rigidbody.velocity.y);
                 break;
         }
 
@@ -74,7 +76,7 @@ public class PlayerController : MonoBehaviour
         if (isJump)
         {
             RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 0.55F);
-
+                
             if (hit.collider != null)
             {
                 m_rigidbody.velocity = new Vector2(m_rigidbody.velocity.x, jumpForce);
