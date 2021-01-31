@@ -27,9 +27,9 @@ public class UiManager : SystemSingleton<UiManager>
         m_gameplayPanel.SetActive(true);  //Unhides the gameplay UI
     }
 
-    void UpdatePlayerHealth()
+    public void UpdatePlayerHealth(int healthLevel)
     {
-        // GameManager.Get().GetPlayer();
+        m_ui.GetComponent<ButtonFuctions>().SetHealthlevel(healthLevel);
     }
 
     public void UpdateAmmoUi(int ammoLevel)

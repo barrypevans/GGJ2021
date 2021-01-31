@@ -34,5 +34,6 @@ public class Player : MonoBehaviour
             Debug.Log("Health" + health);
             //Remove heart
         }
+        UiManager.Get().UpdatePlayerHealth(health);
     }
 }
