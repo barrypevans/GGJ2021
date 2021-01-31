@@ -9,7 +9,8 @@ public class Enemy : MonoBehaviour
         MovingToPosition,
         InPosition,
         Attacking,
-        Dying
+        Dying,
+        Leaping
     }
 
     private Vector2 _startPosition;
