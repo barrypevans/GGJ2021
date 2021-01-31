@@ -53,8 +53,8 @@ public class GameManager : SystemSingleton<GameManager>
         SpawnPlayer(); //Spawns the player
 
         UiManager.Get().ShowGameplayPanel();
-
-        //EnemyManager.Get().StartFirstWave();
+        EnemyManager.Get().SetLocations();
+        EnemyManager.Get().StartWave();
     }
 
     //------- Helpers -------

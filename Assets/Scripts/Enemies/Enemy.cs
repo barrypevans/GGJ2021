@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    public enum EnemyState
+    {
+        MovingToPosition,
+        InPosition,
+        Attacking,
+        Dying
+    }
+
     private Vector2 _startPosition;
     // Start is called before the first frame update
     void Start()
