@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     private bool m_isTeleporting;
     private Vector3 m_teleportTarget;
     private const float kTeleportDist = 5.0f;
+
+    private bool isPaused = false;
+
     void Awake()
     {
         m_isTeleporting = false;
@@ -112,35 +115,41 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        UpdateTeleport();
-        GroundCheck();
-        //Keyboard input for left/right movement
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-        {
-            lateralDirection = LateralDirection.kLeft;
-        }
-        else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            lateralDirection = LateralDirection.kRight;
-        }
-        else
-        {
-            lateralDirection = LateralDirection.kNone;
-        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+            PauseResumeGame();
 
-        //Keyboard input for jumping
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (!isPaused)
         {
-            isJump = true;
-        }
+            UpdateTeleport();
+            GroundCheck();
+            //Keyboard input for left/right movement
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                lateralDirection = LateralDirection.kLeft;
+            }
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                lateralDirection = LateralDirection.kRight;
+            }
+            else
+            {
+                lateralDirection = LateralDirection.kNone;
+            }
 
-        if(Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            DoTeleport();
-        }
+            //Keyboard input for jumping
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                isJump = true;
+            }
 
-        m_rigidbody.gravityScale = m_rigidbody.velocity.y > 0 ? kRisingGravity : kFallingGravity;
-        Debug.DrawRay(transform.position, Vector3.down * .55f, Color.red);
+            if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                DoTeleport();
+            }
+
+            m_rigidbody.gravityScale = m_rigidbody.velocity.y > 0 ? kRisingGravity : kFallingGravity;
+            Debug.DrawRay(transform.position, Vector3.down * .55f, Color.red);
+        }
     }
 
     void FixedUpdate()
@@ -187,5 +196,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void PauseResumeGame()
+    {
+        //Maybe put up panel to show game is paused?
+        Debug.Log(isPaused);
+        Debug.Log(Time.timeScale);
+        if (isPaused)
+        {
+            isPaused = false;
+            FXManager.Get().PlaySFX("sfx/Unpause");
+            Time.timeScale = 1;
+        }
+        else
+        {
+            isPaused = true;
+            FXManager.Get().PlaySFX("sfx/Pause");
+            Time.timeScale = 0;
+        }
+    }
 }
 
