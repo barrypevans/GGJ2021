@@ -43,6 +43,7 @@ public class UiManager : SystemSingleton<UiManager>
     private IEnumerator ShowDialogs(int story)
     {
         m_dialogs.SetActive(true);
+        // first child is background image so add 1
         var sequence = m_dialogs.transform.GetChild(story+1).gameObject;
         for(int i = 0; i < sequence.transform.childCount; i++)
         {
