@@ -65,6 +65,16 @@ public class GameManager : SystemSingleton<GameManager>
         m_gameStarted = true;
     }
 
+    public void WaveCompleted(int wave)
+    {
+        if (wave == 2)
+        {
+            Win();
+            return;
+        }
+        EnemyManager.Get().StartWave(wave + 1);
+    }
+
     public void ResetPlayer()
     {
         m_resetPlayerTimer = 0;
