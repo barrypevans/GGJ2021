@@ -22,7 +22,7 @@ public class FXManager : SystemSingleton<FXManager>
         //Debug.Log("started FXManager");
 
         //Sets the music
-        SetMusic("title_screen_theme_1");    
+        SetMusic("music/title_screen_theme_1");    
     }
 
     // Update is called once per frame
