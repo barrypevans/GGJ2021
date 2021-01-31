@@ -47,13 +47,16 @@ public class Gun : MonoBehaviour
 
     private void Update()
     {
-        UpdateGunPostion();
-        UpdateFiring();
-        UpdateRegen();
+        if (Time.timeScale != 0)
+        {
+            UpdateGunPostion();
+            UpdateFiring();
+            UpdateRegen();
 
-        bool doFlip = GameManager.Get().GetMouseWorldPos().x > m_playerTrasform.position.x;
-        m_gunSpriteLoc.localScale = doFlip ? new Vector3(1,-1,1) : Vector3.one;
-        m_gunNull.localPosition = doFlip ? new Vector3(0,0,0) : Vector3.zero;
+            bool doFlip = GameManager.Get().GetMouseWorldPos().x > m_playerTrasform.position.x;
+            m_gunSpriteLoc.localScale = doFlip ? new Vector3(1, -1, 1) : Vector3.one;
+            m_gunNull.localPosition = doFlip ? new Vector3(0, 0, 0) : Vector3.zero;
+        }
     }
 
     private bool IsFiring()

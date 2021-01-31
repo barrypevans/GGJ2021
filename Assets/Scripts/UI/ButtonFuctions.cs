@@ -8,6 +8,8 @@ public class ButtonFuctions : MonoBehaviour
     [SerializeField] private Transform m_ammoPanel;
     [SerializeField] private Transform m_healthPanel;
 
+    private bool isPaused = false;
+
     public void StartGameplay()
     {
         GameManager.Get().StartGameplay();
@@ -19,20 +21,23 @@ public class ButtonFuctions : MonoBehaviour
         Application.Quit();
     }
 
-    public void PauseResumeGame(Toggle t)
+    /*public void PauseResumeGame()
     {
-        Debug.Log(t);
-        if (t.isOn)
+        //Maybe put up panel to show game is paused?
+        //Debug.Log(t);
+        if (isPaused)
         {
+            isPaused = false;
             FXManager.Get().PlaySFX("sfx/Unpause");
             Time.timeScale = 1;
         }
         else
         {
+            isPaused = true;
             FXManager.Get().PlaySFX("sfx/Pause");
             Time.timeScale = 0;
         }
-    }
+    }*/
 
     public void SetAmmoLevel(int ammoLevel)
     {
