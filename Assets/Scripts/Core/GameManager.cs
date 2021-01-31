@@ -9,6 +9,7 @@ public class GameManager : SystemSingleton<GameManager>
     private GameObject m_enemies;
 
     public GameObject enemyPrefab;
+    public GameObject m_particlePrefab;
 
     public bool m_gameStarted = false;
     public bool m_gameOver = false;
@@ -25,6 +26,7 @@ public class GameManager : SystemSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        m_particlePrefab = Resources.Load<GameObject>("fx/generic-particles");
     }
 
     private void Start()
@@ -60,6 +62,7 @@ public class GameManager : SystemSingleton<GameManager>
         UiManager.Get().ShowGameplayPanel();
         //FXManager.Get().PlaySFX("Pause");
         UiManager.Get().PlayStory(0);
+        FXManager.Get().SetMusic(null);
     }
 
     public void StoryCompleted(int story)
@@ -111,13 +114,13 @@ public class GameManager : SystemSingleton<GameManager>
     public void GameOver()
     {
         //Game over Screen, music, etc
-        Debug.Log("Game Over");
+        //Debug.Log("Game Over");
         FXManager.Get().SetMusic(null);
         FXManager.Get().PlaySFX("sfx/game over", 0F, 0.5F);
         m_player.SetActive(false);
         m_player.GetComponent<Player>().m_gun.SetActive(false);
-        m_gameOver = true;
-        m_gameStarted = false;
+
+        StartCoroutine(Co_LoseCard());
     }
 
     public void Update()
@@ -153,7 +156,20 @@ public class GameManager : SystemSingleton<GameManager>
     IEnumerator Co_WinCard()
     {
         // pop up win card here
-        yield return new WaitForSeconds(3);
+        UiManager.Get().ShowWinPanel(true);
+        yield return new WaitForSeconds(21);
+        UiManager.Get().ShowWinPanel(false);
+        SceneManager.LoadScene(0);
+    }
+
+    IEnumerator Co_LoseCard()
+    {
+        // pop up win card here
+        UiManager.Get().ShowLosePanel(true);
+        yield return new WaitForSeconds(6);
+        UiManager.Get().ShowLosePanel(false);
+        m_gameOver = true;
+        m_gameStarted = false;
         SceneManager.LoadScene(0);
     }
 
@@ -165,4 +181,11 @@ public class GameManager : SystemSingleton<GameManager>
         return pos;
     }
 
+    public void SpawnParticles(Vector3 location, Color color)
+    {
+        var part = Instantiate(m_particlePrefab, location, Quaternion.identity);
+        var main = part.GetComponent<ParticleSystem>().main;
+        main.startColor = color;
+        Destroy(part, 3.0f);
+    }
 }

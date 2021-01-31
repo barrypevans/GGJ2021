@@ -11,6 +11,8 @@ public class UiManager : SystemSingleton<UiManager>
     private GameObject m_mainMenuPanel;
     private GameObject m_gameplayPanel;
     private GameObject m_pausePanel;
+    private GameObject m_winPanel;
+    private GameObject m_losePanel;
 
     private GameObject m_dialogs;
     public bool IsStoryEnabled = true;
@@ -22,8 +24,13 @@ public class UiManager : SystemSingleton<UiManager>
         m_mainMenuPanel = canvas.GetChild(0).gameObject;
         m_gameplayPanel = canvas.GetChild(1).gameObject;
         m_pausePanel = canvas.GetChild(2).gameObject;
+        m_winPanel = canvas.GetChild(4).gameObject;
+        m_losePanel = canvas.GetChild(5).gameObject;
+
         m_gameplayPanel.SetActive(false);
         m_pausePanel.SetActive(false);
+        m_winPanel.SetActive(false);
+        m_losePanel.SetActive(false);
         // story
         m_dialogs = canvas.GetChild(3).gameObject;
         m_dialogs.SetActive(false);
@@ -66,6 +73,16 @@ public class UiManager : SystemSingleton<UiManager>
     public void ShowPausePanel(bool isPaused)
     {
         m_pausePanel.SetActive(isPaused);
+    }
+
+    public void ShowWinPanel(bool isShowing)
+    {
+        m_winPanel.SetActive(isShowing);
+    }
+
+    public void ShowLosePanel(bool isShowing)
+    {
+        m_losePanel.SetActive(isShowing);
     }
 
     public void UpdatePlayerHealth(int healthLevel)
