@@ -27,4 +27,10 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject != GameManager.Get().GetPlayer())
+            Destroy(gameObject);
+    }
 }
