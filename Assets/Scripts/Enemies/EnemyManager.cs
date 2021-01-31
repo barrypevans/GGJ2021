@@ -68,6 +68,10 @@ public class EnemyManager : SystemSingleton<EnemyManager>
             case 2:
                 _spawningCoroutine = SpawnBats(20);
                 break;
+            case 3:
+                //Win condition!
+                GameManager.Get().Win();
+                break;
         }
         StartCoroutine(_spawningCoroutine);
     }

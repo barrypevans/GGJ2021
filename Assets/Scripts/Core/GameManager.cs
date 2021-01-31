@@ -103,6 +103,22 @@ public class GameManager : SystemSingleton<GameManager>
         m_resetPlayerTimer += Time.deltaTime;
     }
 
+    public void Win()
+    {
+        m_player.SetActive(false);
+        m_player.GetComponent<Player>().m_gun.SetActive(false);
+
+        // pop up win card
+        StartCoroutine(Co_WinCard());
+    }
+
+    IEnumerator Co_WinCard()
+    {
+        // pop up win card here
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene(0);
+    }
+
     //------- Helpers -------
     public Vector3 GetMouseWorldPos()
     {
