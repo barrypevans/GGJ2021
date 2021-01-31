@@ -32,5 +32,9 @@ public class UiManager : SystemSingleton<UiManager>
         // GameManager.Get().GetPlayer();
     }
 
+    public void UpdateAmmoUi(int ammoLevel)
+    {
+        m_ui.GetComponent<ButtonFuctions>().SetAmmoLevel(ammoLevel);
+    }
 
 }

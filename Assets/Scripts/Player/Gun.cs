@@ -21,6 +21,11 @@ public class Gun : MonoBehaviour
     private Sprite m_gunSprite;
     private Sprite m_gunSpriteFlash;
     private int m_flashFrameCooldown = 0;
+
+    private const int kMaxBullets = 10;
+    private int m_remainingBullets;
+    private float m_regenCooldown = 0;
+
     private void Awake()
     {
         var p = GameManager.Get().GetPlayer();
@@ -37,12 +42,14 @@ public class Gun : MonoBehaviour
         m_gunSpriteFlash = Resources.Load<Sprite>("revolverFlash");
 
         kOffsetTweak = new Vector3(0, -.3f, 0);
+        m_remainingBullets = 10;
     }
 
     private void Update()
     {
         UpdateGunPostion();
         UpdateFiring();
+        UpdateRegen();
 
         bool doFlip = GameManager.Get().GetMouseWorldPos().x > m_playerTrasform.position.x;
         m_gunSpriteLoc.localScale = doFlip ? new Vector3(1,-1,1) : Vector3.one;
@@ -52,6 +59,24 @@ public class Gun : MonoBehaviour
     private bool IsFiring()
     {
         return Input.GetKey(KeyCode.Mouse0);
+    }
+
+    private void UpdateRegen()
+    {
+        if (IsFiring() || m_remainingBullets >= kMaxBullets)
+        {
+            m_regenCooldown = 0;
+            return;
+        }
+        
+        m_regenCooldown += Time.deltaTime;
+        if(m_regenCooldown >  .3f)
+        {
+            m_regenCooldown = 0;
+            m_remainingBullets++;
+            UiManager.Get().UpdateAmmoUi(m_remainingBullets);
+            FXManager.Get().PlaySFX("Gun Shot 1", 5);
+        }
     }
 
     private Vector3 GetShootDirection()
@@ -81,7 +106,6 @@ public class Gun : MonoBehaviour
 
     private void UpdateFiring()
     {
-
         if (m_flashFrameCooldown == 2)
         {
             m_gunSpriteLoc.GetComponent<SpriteRenderer>().sprite = m_gunSprite;
@@ -94,7 +118,8 @@ public class Gun : MonoBehaviour
         // only shoot kFireRate times per second
         m_fireCoolDown += Time.deltaTime;
         if (IsFiring() && 
-            m_fireCoolDown > (1.0f / kFireRate))
+            m_fireCoolDown > (1.0f / kFireRate)&&
+            m_remainingBullets > 0)
         {
             m_fireCoolDown = 0;
             m_gunSpriteLoc.localPosition = new Vector3(0, -0.2f, 0);
@@ -110,6 +135,10 @@ public class Gun : MonoBehaviour
             m_flashFrameCooldown = 0;
 
             m_gunNull.localRotation = Quaternion.Euler(0, 0, 10);
+
+            FXManager.Get().PlaySFX("Gun Shot 1", Random.Range(-0.2f, 0.2f));
+            m_remainingBullets--;
+            UiManager.Get().UpdateAmmoUi(m_remainingBullets);
         }
 
     }

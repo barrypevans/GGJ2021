@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class ButtonFuctions : MonoBehaviour
 {
+    [SerializeField] private Transform m_ammoPanel;
+    [SerializeField] private Transform m_healthPanel;
+
     public void StartGameplay()
     {
         GameManager.Get().StartGameplay();
@@ -31,8 +34,21 @@ public class ButtonFuctions : MonoBehaviour
         }
     }
 
-    /*public void ResumeGame()
+    public void SetAmmoLevel(int ammoLevel)
     {
-        Time.timeScale = 1;
-    }*/
+        for(int i=0; i< 10; ++i)
+        {
+            Image image = m_ammoPanel.GetChild(i).GetComponent<Image>();
+            image.color = 9-i >= ammoLevel ? new Color(1, 1, 1, .4f) :  Color.white ;
+        }
+    }
+
+    public void SetHealthlevel(int healthLevel)
+    {
+        for (int i = 0; i < 3; ++i)
+        {
+            Image image = m_ammoPanel.GetChild(i).GetComponent<Image>();
+            image.color = i > healthLevel ? Color.white : new Color(1, 1, 1, 0);
+        }
+    }
 }
