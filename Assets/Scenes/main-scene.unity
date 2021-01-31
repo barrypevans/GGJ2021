@@ -1788,7 +1788,7 @@ PrefabInstance:
       objectReference: {fileID: 5325803789973366196, guid: 3a43eda2cd0bb7f4a91ff1fd51bc4512, type: 3}
     - target: {fileID: 8269641854689543163, guid: 686831a1f8ea4ce4a9641b27e37f4d49, type: 3}
       propertyPath: m_debugMusicOff
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 686831a1f8ea4ce4a9641b27e37f4d49, type: 3}

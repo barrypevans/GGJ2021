@@ -115,6 +115,7 @@ public class Bat : Enemy
         if(collision.gameObject.name.Contains("player"))
         {
             GameManager.Get().GetPlayer().GetComponent<Player>().HitPlayer();
+            Kill();
             //.HitPlayer();
             //gameObject.SetActive(false);
         }
