@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour
         GetComponent<SquashAndStretcher>().enabled = false;
         GetComponent<SpriteRenderer>().color = new Color(0,0,0);
         m_rigidbody.simulated = false;
+        m_rigidbody.velocity = Vector3.zero;
     }
 
     private float m_teleportSnapAnim = 0;
@@ -100,6 +101,7 @@ public class PlayerController : MonoBehaviour
             float squashAmountY = 1.0f - cosTheta * invNormTime;
             transform.localScale = new Vector3(squashAmountX, squashAmountY, 1);
             m_teleportMaterializeAnim += Time.deltaTime * 10;
+            CameraManager.Get().DoShake();
         }
         else
         {
