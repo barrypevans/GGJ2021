@@ -60,7 +60,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         switch (wave)
         {
             case 0:
-                _spawningCoroutine = SpawnWerewolves(20);
+                _spawningCoroutine = SpawnBats(20);
                 break;
             case 1:
                 _spawningCoroutine = SpawnBats(40);

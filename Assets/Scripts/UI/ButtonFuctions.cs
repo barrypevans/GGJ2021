@@ -48,7 +48,7 @@ public class ButtonFuctions : MonoBehaviour
         for (int i = 0; i < 3; ++i)
         {
             Image image = m_healthPanel.GetChild(i).GetComponent<Image>();
-            image.color = i <= healthLevel ? Color.white : new Color(1, 1, 1, 0);
+            image.color = i < healthLevel ? Color.white : new Color(1, 1, 1, 0);
         }
     }
 }
