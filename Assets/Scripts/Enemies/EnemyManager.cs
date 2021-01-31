@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.Events;
 
 public class EnemyManager : SystemSingleton<EnemyManager>
 {
@@ -29,10 +31,9 @@ public class EnemyManager : SystemSingleton<EnemyManager>
     {
         m_batPrefab = Resources.Load<GameObject>("Gargoyle");
         m_werewolfPrefab = Resources.Load<GameObject>("Werewolf");
-
+        SetLocations();
         if (IsDebug)
         {
-            SetLocations();
             StartWave();
         }
     }
