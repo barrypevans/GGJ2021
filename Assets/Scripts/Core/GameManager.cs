@@ -9,7 +9,7 @@ public class GameManager : SystemSingleton<GameManager>
 
     public GameObject enemyPrefab;
 
-    [SerializeField] private bool m_debug;
+    public bool m_debugMusicOff;
 
     public GameObject GetPlayer()
     {
@@ -19,7 +19,6 @@ public class GameManager : SystemSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
-       
     }
 
     private void Start()
@@ -53,7 +52,9 @@ public class GameManager : SystemSingleton<GameManager>
         SpawnPlayer(); //Spawns the player
 
         UiManager.Get().ShowGameplayPanel();
-        EnemyManager.Get().SetLocations();
+        //FXManager.Get().PlaySFX("Pause");
+        FXManager.Get().SetMusic("Goth_V.1");
+
         EnemyManager.Get().StartWave();
     }
 

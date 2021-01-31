@@ -22,24 +22,12 @@ public class Bullet : MonoBehaviour
         {
             collision.gameObject.GetComponent<Bat>().Kill();
             Destroy(gameObject);
-        } else // make sure bullet can't collide with player/gun?
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Bat")
-        {
-            collision.gameObject.GetComponent<Bat>().Kill();
-            Destroy(gameObject);
-        } else if (collision.gameObject.tag == "Werewolf")
+        } else if(collision.gameObject.tag == "Werewolf")
         {
             collision.gameObject.GetComponent<Werewolf>().Kill();
             Destroy(gameObject);
         }
-        else // make sure bullet can't collide with player/gun?
+        else if (collision.gameObject != GameManager.Get().GetPlayer())
         {
             Destroy(gameObject);
         }
