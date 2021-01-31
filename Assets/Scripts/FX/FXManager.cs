@@ -16,16 +16,16 @@ public class FXManager : SystemSingleton<FXManager>
         m_sfxCache = new Dictionary<string, AudioClip>();
         //Creates the AudioSource
         m_fxManager = new GameObject("MusicSource");
-        m_fxManager.AddComponent<AudioSource>();
-        m_backTrackManager = new GameObject("MusicSource");
-        m_backTrackManager.AddComponent<AudioSource>();
-
         m_sfxQueue = new Queue<AudioSource>();
-        for(int i = 0; i < 10; i++)
+        for (int i = 0; i < 10; i++) // 10 channel audio queue
         {
             m_sfxQueue.Enqueue(m_fxManager.AddComponent<AudioSource>());
         }
 
+        m_backTrackManager = new GameObject("MusicSource");
+        m_backTrackManager.AddComponent<AudioSource>();
+
+        
         //Instantiate(m_fxManager);
         //Debug.Log("started FXManager");
 
@@ -57,7 +57,7 @@ public class FXManager : SystemSingleton<FXManager>
         m_backTrackManager.GetComponent<AudioSource>().Play();
     }
 
-    public void PlaySFX(string sfxStr, float pitchBend = 0)
+    public void PlaySFX(string sfxStr, float pitchBend = 0, float volume = 1)
     {
         AudioClip sfx;
         if (!m_sfxCache.TryGetValue(sfxStr, out sfx))
@@ -68,6 +68,7 @@ public class FXManager : SystemSingleton<FXManager>
 
         var sfxChannel = m_sfxQueue.Dequeue();
         sfxChannel.pitch = 1 + pitchBend;
+        sfxChannel.volume = volume;
         sfxChannel.PlayOneShot(sfx);
         m_sfxQueue.Enqueue(sfxChannel);
     }

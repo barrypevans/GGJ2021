@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
         if (m_isTeleporting) return;
 
         m_isTeleporting = true;
+        FXManager.Get().PlaySFX("sfx/Dash", Random.Range(0, 5));
 
         Vector3 mousePosWs = GameManager.Get().GetMouseWorldPos();
         Vector3 teleportDir = (mousePosWs - transform.position).normalized;
