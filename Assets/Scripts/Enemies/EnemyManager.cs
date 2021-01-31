@@ -55,6 +55,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
 
     public void StartWave(int wave = 0) // change bat properties based on wave?
     {
+        _wave = wave;
         Debug.Log("Starting wave: " + wave);
         _isWaveFullySpawned = false;
         switch (wave)
@@ -100,11 +101,10 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         {
             if (_isWaveFullySpawned && _werewolves.Count == 0)
             {
-                // GameManager.Get().WaveCompleted();
                 Debug.Log("Wave completed");
                 yield return new WaitForSeconds(5f);
                 StopAllCoroutines();
-                StartWave(++_wave);
+                GameManager.Get().WaveCompleted(_wave);
                 yield return null;
             }
 
@@ -144,11 +144,10 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         {
             if (_isWaveFullySpawned && _bats.Count == 0)
             {
-                // GameManager.Get().WaveCompleted();
                 Debug.Log("Wave completed");
                 yield return new WaitForSeconds(5f);
                 StopAllCoroutines();
-                StartWave(++_wave);
+                GameManager.Get().WaveCompleted(_wave);
                 yield return null;
             }
 

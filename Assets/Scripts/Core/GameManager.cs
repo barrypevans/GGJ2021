@@ -59,7 +59,7 @@ public class GameManager : SystemSingleton<GameManager>
 
         UiManager.Get().ShowGameplayPanel();
         //FXManager.Get().PlaySFX("Pause");
-        FXManager.Get().SetMusic("music/Goth_V.1");
+        FXManager.Get().SetMusic("music/Gameplay Music Wave 1");
         EnemyManager.Get().SetLocations();
         EnemyManager.Get().StartWave();
         m_gameStarted = true;
@@ -67,12 +67,27 @@ public class GameManager : SystemSingleton<GameManager>
 
     public void WaveCompleted(int wave)
     {
-        if (wave == 2)
+        switch (wave)
         {
-            Win();
-            return;
+            case 0:
+                {
+                    FXManager.Get().SetMusic("music/Gameplay Music Wave 2 V.2");
+                    EnemyManager.Get().StartWave(wave + 1);
+                    break;
+                }
+            case 1:
+                {
+                    FXManager.Get().SetMusic("music/Gameplay Music Wave 3 V.2");
+                    EnemyManager.Get().StartWave(wave + 1);
+                    break;
+                }
+            case 2:
+                {
+                    FXManager.Get().SetMusic("music/Play Again Theme V.1");
+                    Win();
+                    break;
+                }
         }
-        EnemyManager.Get().StartWave(wave + 1);
     }
 
     public void ResetPlayer()
