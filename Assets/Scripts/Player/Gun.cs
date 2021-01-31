@@ -78,7 +78,7 @@ public class Gun : MonoBehaviour
             m_regenCooldown = 0;
             m_remainingBullets++;
             UiManager.Get().UpdateAmmoUi(m_remainingBullets);
-            FXManager.Get().PlaySFX("Gun Shot 1", 5);
+            FXManager.Get().PlaySFX("sfx/Gun Shot 1", 5);
         }
     }
 
@@ -139,7 +139,7 @@ public class Gun : MonoBehaviour
 
             m_gunNull.localRotation = Quaternion.Euler(0, 0, 10);
 
-            FXManager.Get().PlaySFX("Gun Shot 1", Random.Range(-0.2f, 0.2f));
+            FXManager.Get().PlaySFX("sfx/Gun Shot 1", Random.Range(-0.2f, 0.2f));
             m_remainingBullets--;
             UiManager.Get().UpdateAmmoUi(m_remainingBullets);
         }

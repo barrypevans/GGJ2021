@@ -60,13 +60,13 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         switch (wave)
         {
             case 0:
-                _spawningCoroutine = SpawnWerewolves(20);
+                _spawningCoroutine = SpawnWerewolves(10);
                 break;
             case 1:
-                _spawningCoroutine = SpawnBats(40);
+                _spawningCoroutine = SpawnBats(20);
                 break;
             case 2:
-                _spawningCoroutine = SpawnBats(60);
+                _spawningCoroutine = SpawnBats(20);
                 break;
         }
         StartCoroutine(_spawningCoroutine);
@@ -143,8 +143,9 @@ public class EnemyManager : SystemSingleton<EnemyManager>
                 // GameManager.Get().WaveCompleted();
                 Debug.Log("Wave completed");
                 yield return new WaitForSeconds(5f);
+                StopAllCoroutines();
                 StartWave(++_wave);
-                StopCoroutine(_attackingCoroutine);
+                yield return null;
             }
 
             var eligibleBats = _bats.Where(a => 

@@ -60,7 +60,7 @@ public class Werewolf : Enemy
 
     public void Attack()
     {
-        StopCoroutine(_stateCycler);
+        StopAllCoroutines();
         State = EnemyState.Attacking;
         SetCurrentTarget(m_player);
     }
