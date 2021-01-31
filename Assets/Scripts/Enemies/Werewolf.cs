@@ -114,6 +114,7 @@ private void GetOutOfPosition(Vector3 toTarget)
     {
         EnemyManager.Get().GetWerewolves().Remove(gameObject);
         FXManager.Get().PlaySFX("sfx/wolf howl", Random.Range(0, 3), 0.1F);
+        GameManager.Get().SpawnParticles(transform.position, Color.gray);
         Destroy(gameObject);
     }
 
