@@ -7,21 +7,28 @@ public class Werewolf : Enemy
     public EnemyState State = EnemyState.Leaping;
     private Rigidbody2D m_rigidbody;
     private float _kAccel = 3f;
-    private float _kMaxVelocity = 3f;
-    private float _kLeapVelocity = 150f;
+    private float _kMaxVelocity = 10f;
+    private float _kLeapVelocity = 20f;
     
     private Transform m_player;
     private Transform m_currentTarget;
 
+    private SpriteRenderer m_renderer;
+
+
+    IEnumerator _stateCycler;
+
     // Start is called before the first frame update
     void Start()
     {
+        m_renderer = GetComponent<SpriteRenderer>();
         m_player = GameManager.Get().GetPlayer().transform;
         m_rigidbody = GetComponent<Rigidbody2D>();
         _kAccel += Random.Range(0, 4.5f);
 
         m_currentTarget = m_player;
-        StartCoroutine(CycleState());
+        _stateCycler = CycleState();
+        StartCoroutine(_stateCycler);
     }
 
     IEnumerator CycleState()
@@ -33,6 +40,7 @@ public class Werewolf : Enemy
                 {
                     yield return new WaitForSeconds(.5f);
                     State = EnemyState.InPosition;
+                    
                 }
                 else if (State == EnemyState.InPosition) 
                 {
@@ -40,8 +48,11 @@ public class Werewolf : Enemy
                     State = EnemyState.MovingToPosition;
                 } else if (State == EnemyState.Leaping)
                 {
-                    yield return new WaitForSeconds(20f);
+                    yield return new WaitForSeconds(2.5f);
                     State = EnemyState.InPosition;
+                } else
+                {
+                    yield return new WaitForSeconds(5f);
                 }
             }
         }
@@ -49,6 +60,7 @@ public class Werewolf : Enemy
 
     public void Attack()
     {
+        StopCoroutine(_stateCycler);
         State = EnemyState.Attacking;
         SetCurrentTarget(m_player);
     }
@@ -75,23 +87,28 @@ public class Werewolf : Enemy
             default:
                 break;
         }
+        m_renderer.flipX = m_rigidbody.velocity.x < 0;
         //DampenAccel(toTarget);
     }
 
-    private void GetOutOfPosition(Vector3 toTarget)
+private void GetOutOfPosition(Vector3 toTarget)
     {
-        m_rigidbody.velocity = new Vector2(-toTarget.normalized.x * _kMaxVelocity, transform.position.y);
+        m_rigidbody.velocity += new Vector2(-toTarget.normalized.x * _kMaxVelocity, transform.position.y) * Time.deltaTime * _kMaxVelocity / 4;
     }
 
     private void MoveToPosition(Vector3 toTarget)
     {
-        m_rigidbody.velocity = new Vector2(toTarget.normalized.x * _kMaxVelocity, transform.position.y);
+        m_rigidbody.velocity += new Vector2(toTarget.normalized.x * _kMaxVelocity, transform.position.y) * Time.deltaTime * _kMaxVelocity /4 ;
     }
 
     private void MoveToAttack(Vector3 toTarget)
     {
-        m_rigidbody.AddForce(new Vector2(0, 500f));
+        m_rigidbody.velocity = Vector2.zero;
+        m_rigidbody.AddForce(new Vector2(toTarget.normalized.x, 1f) 
+            * _kLeapVelocity * (toTarget.magnitude + 5));
         State = EnemyState.Leaping;
+        _stateCycler = CycleState();
+        StartCoroutine(_stateCycler);
     }
     public void Kill()
     {

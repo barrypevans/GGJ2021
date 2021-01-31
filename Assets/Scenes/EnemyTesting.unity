@@ -723,6 +723,10 @@ PrefabInstance:
       propertyPath: m_debug
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8269641854689543163, guid: 686831a1f8ea4ce4a9641b27e37f4d49, type: 3}
+      propertyPath: m_playerSpawn
+      value: 
+      objectReference: {fileID: 825113082}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 686831a1f8ea4ce4a9641b27e37f4d49, type: 3}
 --- !u!1 &1389648579
