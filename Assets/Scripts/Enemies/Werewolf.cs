@@ -104,7 +104,7 @@ private void GetOutOfPosition(Vector3 toTarget)
     private void MoveToAttack(Vector3 toTarget)
     {
         m_rigidbody.velocity = Vector2.zero;
-        m_rigidbody.AddForce(new Vector2(toTarget.normalized.x, 1f) 
+        m_rigidbody.AddForce(new Vector2(toTarget.normalized.x, Mathf.Max(Mathf.Sqrt(toTarget.y), 1f)) 
             * _kLeapVelocity * (toTarget.magnitude + 5));
         State = EnemyState.Leaping;
         _stateCycler = CycleState();
@@ -125,6 +125,15 @@ private void GetOutOfPosition(Vector3 toTarget)
         if (m_rigidbody.velocity.magnitude > _kMaxVelocity)
         {
             m_rigidbody.velocity = m_rigidbody.velocity.normalized * _kMaxVelocity;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject == GameManager.Get().GetPlayer())
+        {
+            GameManager.Get().GetPlayer().GetComponent<Player>().HitPlayer();
+            Kill();
         }
     }
 }
