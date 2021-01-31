@@ -58,6 +58,12 @@ public class GameManager : SystemSingleton<GameManager>
         EnemyManager.Get().StartWave();
     }
 
+    public void GameOver()
+    {
+        //Game over Screen, music, etc
+        Debug.Log("Game Over");
+    }
+
     //------- Helpers -------
     public Vector3 GetMouseWorldPos()
     {
