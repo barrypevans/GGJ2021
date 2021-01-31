@@ -8,6 +8,8 @@ TagManager:
   - TargetPoint
   - Bat
   - Werewolf
+  - BatSpawnPoint
+  - WerewolfSpawnPoint
   layers:
   - Default
   - TransparentFX

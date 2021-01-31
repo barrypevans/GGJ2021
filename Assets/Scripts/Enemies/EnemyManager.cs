@@ -10,11 +10,11 @@ public class EnemyManager : SystemSingleton<EnemyManager>
     private const int BatsPerWave = 10;
     private const int WerewolvesPerWave = 5;
 
-    private Transform[] SpawnLocations;
+    private Transform[] BatSpawnLocations;
+    private Transform[] WerewolfSpawnLocations;
     private Transform[] TargetLocations;
 
     public Transform PlayerPosition;
-    public bool IsDebug;
     private List<GameObject> _bats = new List<GameObject>();
     private List<GameObject> _werewolves = new List<GameObject>();
     private bool _isWaveFullySpawned;
@@ -45,7 +45,8 @@ public class EnemyManager : SystemSingleton<EnemyManager>
 
     public void SetLocations()
     {
-        SpawnLocations = GameObject.FindGameObjectsWithTag("SpawnPoint").Select(a=>a.transform).ToArray();
+        BatSpawnLocations = GameObject.FindGameObjectsWithTag("BatSpawnPoint").Select(a=>a.transform).ToArray();
+        WerewolfSpawnLocations = GameObject.FindGameObjectsWithTag("WerewolfSpawnPoint").Select(a => a.transform).ToArray();
         var targets = GameObject.FindGameObjectsWithTag("TargetPoint");
         foreach (var target in targets)
             target.AddComponent<HoverTarget>();
@@ -59,7 +60,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         switch (wave)
         {
             case 0:
-                _spawningCoroutine = SpawnBats(20);
+                _spawningCoroutine = SpawnWerewolves(20);
                 break;
             case 1:
                 _spawningCoroutine = SpawnBats(40);
@@ -77,10 +78,10 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         StartCoroutine(_attackingCoroutine);
         for (int j = 0; j < totalWerewolfCount / WerewolvesPerWave; j++)
         {
-            int spawnLoc = Random.Range(0, SpawnLocations.Length);
+            int spawnLoc = Random.Range(0, WerewolfSpawnLocations.Length);
             for (int i = 0; i < WerewolvesPerWave; i++)
             {
-                var werewolf = Instantiate(m_werewolfPrefab, SpawnLocations[spawnLoc].position, Quaternion.identity);
+                var werewolf = Instantiate(m_werewolfPrefab, WerewolfSpawnLocations[spawnLoc].position, Quaternion.identity);
                 _werewolves.Add(werewolf);
                 yield return new WaitForSeconds(.2f);
             }
@@ -117,11 +118,11 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         _attackingCoroutine = BatAttack();
         StartCoroutine(_attackingCoroutine);
         for (int j = 0; j < totalBatCount / BatsPerWave; j++) {
-            int spawnLoc = Random.Range(0, SpawnLocations.Length);
+            int spawnLoc = Random.Range(0, BatSpawnLocations.Length);
             int targetLoc = Random.Range(0, TargetLocations.Length);
             for (int i = 0; i < BatsPerWave; i++)
             {
-                var bat = Instantiate(m_batPrefab, SpawnLocations[spawnLoc].position, Quaternion.identity);
+                var bat = Instantiate(m_batPrefab, BatSpawnLocations[spawnLoc].position, Quaternion.identity);
                 bat.GetComponent<Bat>().SetTarget(TargetLocations[targetLoc]);
                 _bats.Add(bat);
                 yield return new WaitForSeconds(.2f);
