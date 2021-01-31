@@ -56,7 +56,7 @@ public class GameManager : SystemSingleton<GameManager>
         //FXManager.Get().PlaySFX("Pause");
         FXManager.Get().SetMusic("Goth_V.1");
 
-        //EnemyManager.Get().StartFirstWave();
+        EnemyManager.Get().StartWave();
     }
 
     //------- Helpers -------

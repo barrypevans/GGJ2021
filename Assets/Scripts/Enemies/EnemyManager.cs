@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.Events;
 
 public class EnemyManager : SystemSingleton<EnemyManager>
 {
@@ -61,7 +63,25 @@ public class EnemyManager : SystemSingleton<EnemyManager>
                 _spawningCoroutine = SpawnBats(60);
                 break;
         }
-        StartCoroutine(_spawningCoroutine);
+        string sceneName = "Wave" + wave.ToString();
+        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        Scene scene = SceneManager.GetSceneByName(sceneName);
+
+        UnityAction sceneLoadDelegate = ()=>
+        {
+            SceneManager.SetActiveScene(scene);
+            SetLocations();
+            StartCoroutine(_spawningCoroutine);
+        };
+        
+        StartCoroutine(WaitForScene(scene, sceneLoadDelegate));
+    }
+
+    IEnumerator WaitForScene(Scene scene, UnityAction action)
+    {
+        while(!scene.isLoaded)
+            yield return new WaitForEndOfFrame();
+        action.Invoke();
     }
 
     IEnumerator SpawnBats(int totalBatCount)
