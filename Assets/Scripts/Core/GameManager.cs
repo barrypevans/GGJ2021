@@ -112,6 +112,8 @@ public class GameManager : SystemSingleton<GameManager>
     {
         //Game over Screen, music, etc
         Debug.Log("Game Over");
+        FXManager.Get().SetMusic(null);
+        FXManager.Get().PlaySFX("sfx/game over", 0F, 0.5F);
         m_player.SetActive(false);
         m_player.GetComponent<Player>().m_gun.SetActive(false);
         m_gameOver = true;

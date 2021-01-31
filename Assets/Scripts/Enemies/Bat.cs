@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
 public class Bat : Enemy
 {
     public EnemyState State = EnemyState.MovingToPosition;
@@ -16,6 +17,12 @@ public class Bat : Enemy
 
     private const float MaxTargetOffset = 1.5f;
 
+    private Sprite[] m_sprites;
+    private SpriteRenderer m_spriteRenderer;
+    private int m_animIndex = 0;
+    private float kAnimFPS = 30;
+    private float m_animCounter = 0;
+
     private void Awake()
     {
         m_player = GameManager.Get().GetPlayer().transform;
@@ -24,6 +31,12 @@ public class Bat : Enemy
             Random.Range(-MaxTargetOffset, MaxTargetOffset), 
             Random.Range(-MaxTargetOffset, MaxTargetOffset));
         _kAccel += Random.Range(0, 4.5f);
+
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        m_sprites = new Sprite[4];
+        for (int index = 0; index < 4; ++index)
+            m_sprites[index] = Resources.Load<Sprite>(string.Format("sprites/bat/bat{0}", index + 1));
+        m_animCounter = Random.Range(0, 3);
     }
 
     public void Attack()
@@ -41,6 +54,24 @@ public class Bat : Enemy
     private void SetCurrentTarget(Transform currentTarget)
     {
         m_currentTarget = currentTarget;
+    }
+
+    public void Update()
+    {
+        UpdateAnimation();
+    }
+
+    public void UpdateAnimation()
+    {
+        if(m_animCounter>1.0f/ kAnimFPS)
+        {
+            m_animCounter = 0;
+            m_animIndex++;
+            if (m_animIndex > 3)
+                m_animIndex = 0;
+            m_spriteRenderer.sprite = m_sprites[m_animIndex];
+        }
+        m_animCounter += Time.deltaTime;
     }
 
     // Update is called once per frame
@@ -107,7 +138,7 @@ public class Bat : Enemy
     public void Kill()
     {
         EnemyManager.Get().GetBats().Remove(gameObject);
-        FXManager.Get().PlaySFX("sfx/Splat 2", Random.Range(0, 5));
+        FXManager.Get().PlaySFX("sfx/Splat 2", Random.Range(0, 5), 0.1F);
         Destroy(gameObject);
     }
 
@@ -116,7 +147,7 @@ public class Bat : Enemy
         if(collision.gameObject.name.Contains("player"))
         {
             GameManager.Get().GetPlayer().GetComponent<Player>().HitPlayer();
-            FXManager.Get().PlaySFX("sfx/Splat 1", Random.Range(0, 3));
+            FXManager.Get().PlaySFX("sfx/Splat 1", Random.Range(0, 3), 0.1F);
             Kill();
         }
     }

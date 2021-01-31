@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         if (m_isTeleporting) return;
 
         m_isTeleporting = true;
-        FXManager.Get().PlaySFX("sfx/Dash", Random.Range(0, 5));
+        FXManager.Get().PlaySFX("sfx/Dash", Random.Range(1, 5), 0.4F);
 
         Vector3 mousePosWs = GameManager.Get().GetMouseWorldPos();
         Vector3 teleportDir = (mousePosWs - transform.position).normalized;
@@ -206,14 +206,14 @@ public class PlayerController : MonoBehaviour
         if (isPaused)
         {
             isPaused = false;
-            FXManager.Get().PlaySFX("sfx/Unpause");
+            FXManager.Get().PlaySFX("sfx/Unpause", 0F, 0.5F);
             UiManager.Get().ShowPausePanel(false);
             Time.timeScale = 1;
         }
         else
         {
             isPaused = true;
-            FXManager.Get().PlaySFX("sfx/Pause");
+            FXManager.Get().PlaySFX("sfx/Pause", 0F, 0.5F);
             Time.timeScale = 0;
             UiManager.Get().ShowPausePanel(true);
         }
