@@ -26,6 +26,12 @@ public class Gun : MonoBehaviour
     private int m_remainingBullets;
     private float m_regenCooldown = 0;
 
+    public void ResetAmmo()
+    {
+        m_remainingBullets = kMaxBullets;
+        UiManager.Get().UpdateAmmoUi(m_remainingBullets);
+    }
+
     private void Awake()
     {
         var p = GameManager.Get().GetPlayer();

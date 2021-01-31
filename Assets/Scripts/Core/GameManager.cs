@@ -70,6 +70,7 @@ public class GameManager : SystemSingleton<GameManager>
         m_resetPlayerTimer = 0;
         m_player.SetActive(false);
         m_player.GetComponent<Player>().m_gun.SetActive(false);
+        m_player.GetComponent<Player>().ResetGun();
     }
 
     public void GameOver()

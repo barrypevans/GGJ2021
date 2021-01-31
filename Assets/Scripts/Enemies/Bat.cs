@@ -116,8 +116,6 @@ public class Bat : Enemy
         {
             GameManager.Get().GetPlayer().GetComponent<Player>().HitPlayer();
             Kill();
-            //.HitPlayer();
-            //gameObject.SetActive(false);
         }
     }
 }

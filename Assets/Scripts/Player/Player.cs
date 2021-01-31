@@ -9,6 +9,11 @@ public class Player : MonoBehaviour
     public GameObject m_gun;
     private int health = 3;
 
+    public void ResetGun()
+    {
+        m_gun.GetComponent<Gun>().ResetAmmo();
+    }
+
     private void Awake()
     {
         m_renderer = GetComponent<SpriteRenderer>();
