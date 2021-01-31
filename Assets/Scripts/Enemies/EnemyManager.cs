@@ -27,15 +27,10 @@ public class EnemyManager : SystemSingleton<EnemyManager>
     private int _wave = 0; // manage this in game manager?
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         m_batPrefab = Resources.Load<GameObject>("Gargoyle");
         m_werewolfPrefab = Resources.Load<GameObject>("Werewolf");
-        SetLocations();
-        if (IsDebug)
-        {
-            StartWave();
-        }
     }
 
     public List<GameObject> GetBats()

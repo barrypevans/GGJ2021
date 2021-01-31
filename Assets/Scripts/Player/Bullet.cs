@@ -22,7 +22,12 @@ public class Bullet : MonoBehaviour
         {
             collision.gameObject.GetComponent<Bat>().Kill();
             Destroy(gameObject);
-        } else if(collision.gameObject.tag == "Werewolf")
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Werewolf")
         {
             collision.gameObject.GetComponent<Werewolf>().Kill();
             Destroy(gameObject);
