@@ -138,7 +138,7 @@ public class Bat : Enemy
     public void Kill()
     {
         EnemyManager.Get().GetBats().Remove(gameObject);
-        FXManager.Get().PlaySFX("sfx/Splat 2", Random.Range(0, 5));
+        FXManager.Get().PlaySFX("sfx/Splat 2", Random.Range(0, 5), 0.1F);
         Destroy(gameObject);
     }
 
@@ -147,7 +147,7 @@ public class Bat : Enemy
         if(collision.gameObject.name.Contains("player"))
         {
             GameManager.Get().GetPlayer().GetComponent<Player>().HitPlayer();
-            FXManager.Get().PlaySFX("sfx/Splat 1", Random.Range(0, 3));
+            FXManager.Get().PlaySFX("sfx/Splat 1", Random.Range(0, 3), 0.1F);
             Kill();
         }
     }
