@@ -36,13 +36,13 @@ public class Player : MonoBehaviour
         if (health == 0)
         {
             GameManager.Get().GameOver();
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
             //Game over
         }
         else
         {
             //Respawn player?
-            Debug.Log("Health" + health);
+            //Debug.Log("Health" + health);
             GameManager.Get().ResetPlayer();
             //Destroy(m_gun);
             //Destroy(gameObject);
