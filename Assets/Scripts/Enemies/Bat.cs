@@ -140,6 +140,7 @@ public class Bat : Enemy
         EnemyManager.Get().GetBats().Remove(gameObject);
         FXManager.Get().PlaySFX("sfx/Splat 2", Random.Range(0, 5), 0.1F);
         GameManager.Get().SpawnParticles(transform.position, Color.black);
+        FXManager.Get().DoHitPause();
         Destroy(gameObject);
     }
 
