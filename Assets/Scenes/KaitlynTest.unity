@@ -518,6 +518,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 1255524999377066550, guid: 69585708787c7f74f8a52de9dee4f1cc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1255524999479811132, guid: 69585708787c7f74f8a52de9dee4f1cc, type: 3}
       propertyPath: m_Camera
       value: 
