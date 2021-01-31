@@ -12,6 +12,7 @@ public class FXManager : SystemSingleton<FXManager>
         //Creates the AudioSource
         m_fxManager = new GameObject("MusicSource");
         m_fxManager.AddComponent<AudioSource>();
+
         //Instantiate(m_fxManager);
         //Debug.Log("started FXManager");
 
@@ -29,8 +30,8 @@ public class FXManager : SystemSingleton<FXManager>
     public void SetMusic(string musicStr)
     {
 
-        Debug.Log(m_fxManager);
-        Debug.Log(musicStr);
+        //Debug.Log(m_fxManager);
+        //Debug.Log(musicStr);
         m_fxManager.GetComponent<AudioSource>().Play();
 
         if (GameManager.Get().m_debugMusicOff) return;
@@ -41,5 +42,11 @@ public class FXManager : SystemSingleton<FXManager>
 
         m_fxManager.GetComponent<AudioSource>().loop = true;
         m_fxManager.GetComponent<AudioSource>().Play();
+    }
+
+    public void PlaySFX(string sfxStr)
+    {
+        AudioClip sfx = Resources.Load<AudioClip>(sfxStr);
+        m_fxManager.GetComponent<AudioSource>().PlayOneShot(sfx);
     }
 }

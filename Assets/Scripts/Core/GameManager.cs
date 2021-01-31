@@ -53,6 +53,7 @@ public class GameManager : SystemSingleton<GameManager>
         SpawnPlayer(); //Spawns the player
 
         UiManager.Get().ShowGameplayPanel();
+        //FXManager.Get().PlaySFX("Pause");
         FXManager.Get().SetMusic("Goth_V.1");
 
         //EnemyManager.Get().StartFirstWave();
