@@ -9,7 +9,7 @@ public class GameManager : SystemSingleton<GameManager>
 
     public GameObject enemyPrefab;
 
-    [SerializeField] private bool m_debug;
+    public bool m_debugMusicOff;
 
     public GameObject GetPlayer()
     {
