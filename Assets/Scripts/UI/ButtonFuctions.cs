@@ -24,12 +24,12 @@ public class ButtonFuctions : MonoBehaviour
         Debug.Log(t);
         if (t.isOn)
         {
-            FXManager.Get().PlaySFX("Unpause");
+            FXManager.Get().PlaySFX("sfx/Unpause");
             Time.timeScale = 1;
         }
         else
         {
-            FXManager.Get().PlaySFX("Pause");
+            FXManager.Get().PlaySFX("sfx/Pause");
             Time.timeScale = 0;
         }
     }
