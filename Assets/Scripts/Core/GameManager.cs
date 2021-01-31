@@ -59,35 +59,45 @@ public class GameManager : SystemSingleton<GameManager>
 
         UiManager.Get().ShowGameplayPanel();
         //FXManager.Get().PlaySFX("Pause");
-        FXManager.Get().SetMusic("music/Gameplay Music Wave 1");
-        EnemyManager.Get().SetLocations();
-        EnemyManager.Get().StartWave();
-        m_gameStarted = true;
+        UiManager.Get().PlayStory(0);
     }
 
-    public void WaveCompleted(int wave)
+    public void StoryCompleted(int story)
     {
-        switch (wave)
+        switch (story)
         {
             case 0:
                 {
-                    FXManager.Get().SetMusic("music/Gameplay Music Wave 2 V.2");
-                    EnemyManager.Get().StartWave(wave + 1);
+                    FXManager.Get().SetMusic("music/Gameplay Music Wave 1");
+                    EnemyManager.Get().SetLocations();
+                    EnemyManager.Get().StartWave();
+                    m_gameStarted = true;
                     break;
                 }
             case 1:
                 {
-                    FXManager.Get().SetMusic("music/Gameplay Music Wave 3 V.2");
-                    EnemyManager.Get().StartWave(wave + 1);
+                    FXManager.Get().SetMusic("music/Gameplay Music Wave 2 V.2");
+                    EnemyManager.Get().StartWave(story);
                     break;
                 }
             case 2:
+                {
+                    FXManager.Get().SetMusic("music/Gameplay Music Wave 3 V.2");
+                    EnemyManager.Get().StartWave(story);
+                    break;
+                }
+            case 3:
                 {
                     FXManager.Get().SetMusic("music/Play Again Theme V.1");
                     Win();
                     break;
                 }
         }
+    }
+
+    public void WaveCompleted(int wave)
+    {
+        UiManager.Get().PlayStory(wave+1);
     }
 
     public void ResetPlayer()
@@ -102,6 +112,8 @@ public class GameManager : SystemSingleton<GameManager>
     {
         //Game over Screen, music, etc
         Debug.Log("Game Over");
+        FXManager.Get().SetMusic(null);
+        FXManager.Get().PlaySFX("sfx/game over", 0F, 0.5F);
         m_player.SetActive(false);
         m_player.GetComponent<Player>().m_gun.SetActive(false);
         m_gameOver = true;

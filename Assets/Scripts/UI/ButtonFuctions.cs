@@ -17,27 +17,9 @@ public class ButtonFuctions : MonoBehaviour
 
     public void ExitApplication()
     {
-        Debug.Log("Quitting Application");
+        //Debug.Log("Quitting Application");
         Application.Quit();
     }
-
-    /*public void PauseResumeGame()
-    {
-        //Maybe put up panel to show game is paused?
-        //Debug.Log(t);
-        if (isPaused)
-        {
-            isPaused = false;
-            FXManager.Get().PlaySFX("sfx/Unpause");
-            Time.timeScale = 1;
-        }
-        else
-        {
-            isPaused = true;
-            FXManager.Get().PlaySFX("sfx/Pause");
-            Time.timeScale = 0;
-        }
-    }*/
 
     public void SetAmmoLevel(int ammoLevel)
     {

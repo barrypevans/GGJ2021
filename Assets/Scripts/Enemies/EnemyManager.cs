@@ -71,7 +71,6 @@ public class EnemyManager : SystemSingleton<EnemyManager>
                 break;
             case 3:
                 //Win condition!
-                GameManager.Get().Win();
                 break;
         }
         StartCoroutine(_spawningCoroutine);
