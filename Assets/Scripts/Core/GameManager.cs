@@ -9,6 +9,7 @@ public class GameManager : SystemSingleton<GameManager>
     private GameObject m_enemies;
 
     public GameObject enemyPrefab;
+    public GameObject m_particlePrefab;
 
     public bool m_gameStarted = false;
     public bool m_gameOver = false;
@@ -25,6 +26,7 @@ public class GameManager : SystemSingleton<GameManager>
     protected override void Awake()
     {
         base.Awake();
+        m_particlePrefab = Resources.Load<GameObject>("fx/generic-particles");
     }
 
     private void Start()
@@ -165,4 +167,11 @@ public class GameManager : SystemSingleton<GameManager>
         return pos;
     }
 
+    public void SpawnParticles(Vector3 location, Color color)
+    {
+        var part = Instantiate(m_particlePrefab, location, Quaternion.identity);
+        var main = part.GetComponent<ParticleSystem>().main;
+        main.startColor = color;
+        Destroy(part, 3.0f);
+    }
 }

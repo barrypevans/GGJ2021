@@ -12,6 +12,12 @@ public class PlayerController : MonoBehaviour
         kNone
     }
 
+    class AnimData
+    {
+        public Sprite[] m_sprites;
+        public int m_spriteCount;
+    };
+
     private Rigidbody2D m_rigidbody;
 
     public float jumpForce;
@@ -32,13 +38,47 @@ public class PlayerController : MonoBehaviour
 
     private bool isPaused = false;
 
+    SpriteRenderer m_sprite;
+
+    private float m_animFpsTimer = 0;
+    private int m_animIndex = 0;
+    AnimData m_activeAnimData;
+    AnimData m_walkAnimData;
+    AnimData m_reverseWalkAnimData;
+    AnimData m_idleAnimData;
+    AnimData m_riseAnimData;
+    AnimData m_fallAnimData;
     void Awake()
     {
         m_isTeleporting = false;
         m_rigidbody = GetComponent<Rigidbody2D>();
+
+        m_sprite = GetComponent<SpriteRenderer>();
+
+        m_walkAnimData = InitAnimData("sprites/player/playerWalk", 4);
+        m_reverseWalkAnimData = InitAnimData("sprites/player/playerWalk", 4, true);
+        m_idleAnimData = InitAnimData("sprites/player/playerIdle", 1);
+        m_riseAnimData = InitAnimData("sprites/player/playerRise", 1);
+        m_fallAnimData = InitAnimData("sprites/player/playerFall", 1);
+        m_activeAnimData = m_idleAnimData;
+
+
     }
 
-
+    private AnimData InitAnimData(string prefix, int spriteCount, bool invert = false)
+    {
+        AnimData data = new AnimData();
+        data.m_spriteCount = spriteCount;
+        data.m_sprites = new Sprite[spriteCount];
+        for (int i = 0; i < data.m_spriteCount; ++i)
+        {
+            int index = i;
+            if (invert)
+                index = (data.m_spriteCount - 1) - i;
+            data.m_sprites[index] = Resources.Load<Sprite>(prefix + (index + 1).ToString());
+        }
+        return data;
+    }
 
     private void DoTeleport()
     {
@@ -67,7 +107,7 @@ public class PlayerController : MonoBehaviour
         m_teleportMaterializeAnim = 0;
         m_teleportPause = 0;
         GetComponent<SquashAndStretcher>().enabled = false;
-        GetComponent<SpriteRenderer>().color = new Color(0,0,0);
+        GetComponent<SpriteRenderer>().color = new Color(0, 0, 0);
         m_rigidbody.simulated = false;
         m_rigidbody.velocity = Vector3.zero;
     }
@@ -85,14 +125,14 @@ public class PlayerController : MonoBehaviour
             float squashAmountX = 1.0f + cosTheta * .5f;
             float squashAmountY = 1.0f - cosTheta * .5f;
             transform.localScale = new Vector3(squashAmountX, squashAmountY, 1);
-            m_teleportSnapAnim += Time.deltaTime*10;
+            m_teleportSnapAnim += Time.deltaTime * 10;
         }
         else if (m_teleportPause < 1.0f)
         {
             //GetComponent<SpriteRenderer>().color = new Color(1,1,1,0);
             m_teleportPause += Time.deltaTime * 30;
         }
-        else if(m_teleportMaterializeAnim < 1.0f)
+        else if (m_teleportMaterializeAnim < 1.0f)
         {
             transform.position = m_teleportTarget;
             float cosTheta = Mathf.Cos(m_teleportSnapAnim * 2 * 3.14159f);
@@ -116,6 +156,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        UpdateAnims();
+
         if (Input.GetKeyDown(KeyCode.Escape))
             PauseResumeGame();
 
@@ -177,6 +219,49 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void UpdateAnims()
+    {
+        if (IsGrounded())
+        {
+            if (lateralDirection != LateralDirection.kNone)
+            {
+                float MouseXWs = GameManager.Get().GetMouseWorldPos().x;
+                bool invert = MouseXWs < transform.position.x && lateralDirection == LateralDirection.kRight ||
+                    MouseXWs >= transform.position.x && lateralDirection == LateralDirection.kLeft;
+                if (invert)
+                    m_activeAnimData = m_reverseWalkAnimData;
+                else
+                    m_activeAnimData = m_walkAnimData;
+            }
+            else if (lateralDirection == LateralDirection.kNone)
+            {
+                m_activeAnimData = m_idleAnimData;
+            }
+        }
+        else
+        {
+            if (m_rigidbody.velocity.y > 0)
+            {
+                m_activeAnimData = m_riseAnimData;
+            }
+            else
+            {
+                m_activeAnimData = m_fallAnimData;
+            }
+        }
+        if (m_animFpsTimer >= .1)
+        {
+            if (null == m_activeAnimData) return;
+            m_animIndex = m_animIndex % m_activeAnimData.m_spriteCount;
+
+            m_sprite.sprite = m_activeAnimData.m_sprites[m_animIndex];
+
+            m_animIndex++;
+            m_animFpsTimer = 0;
+        }
+        m_animFpsTimer += Time.deltaTime;
+    }
+
     public bool IsGrounded()
     {
         return m_isGrounded;
@@ -218,7 +303,7 @@ public class PlayerController : MonoBehaviour
             UiManager.Get().ShowPausePanel(true);
         }
 
-        
+
     }
 }
 
