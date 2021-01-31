@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
         }
         else
         {
+            //Respawn player?
             Debug.Log("Health" + health);
             //Remove heart
         }
