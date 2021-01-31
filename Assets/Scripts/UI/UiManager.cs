@@ -12,6 +12,8 @@ public class UiManager : SystemSingleton<UiManager>
     private GameObject m_gameplayPanel;
     private GameObject m_pausePanel;
 
+    private GameObject m_dialogs;
+    public bool IsStoryEnabled = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +24,36 @@ public class UiManager : SystemSingleton<UiManager>
         m_pausePanel = canvas.GetChild(2).gameObject;
         m_gameplayPanel.SetActive(false);
         m_pausePanel.SetActive(false);
+        // story
+        m_dialogs = canvas.GetChild(3).gameObject;
+        m_dialogs.SetActive(false);
+    }
+
+    public void PlayStory(int story)
+    {
+        if(!IsStoryEnabled)
+        {
+            GameManager.Get().StoryCompleted(story);
+            return;
+        }
+        StopAllCoroutines();
+        StartCoroutine(ShowDialogs(story));
+    }
+
+    private IEnumerator ShowDialogs(int story)
+    {
+        m_dialogs.SetActive(true);
+        var sequence = m_dialogs.transform.GetChild(story+1).gameObject;
+        for(int i = 0; i < sequence.transform.childCount; i++)
+        {
+            var dialog = sequence.transform.GetChild(i).gameObject;
+            dialog.SetActive(true);
+            yield return new WaitForSeconds(5);
+            dialog.SetActive(false);
+        }
+        m_dialogs.SetActive(false);
+        GameManager.Get().StoryCompleted(story);
+        yield return null;
     }
 
     public void ShowGameplayPanel()
