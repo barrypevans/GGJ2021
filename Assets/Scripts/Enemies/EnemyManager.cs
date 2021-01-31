@@ -25,10 +25,10 @@ public class EnemyManager : SystemSingleton<EnemyManager>
     void Start()
     {
         m_batPrefab = Resources.Load<GameObject>("Gargoyle");
-
+        SetLocations();
+        
         if (IsDebug)
         {
-            SetLocations();
             StartWave();
         }
     }
@@ -63,18 +63,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
                 _spawningCoroutine = SpawnBats(60);
                 break;
         }
-        string sceneName = "Wave" + wave.ToString();
-        SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        Scene scene = SceneManager.GetSceneByName(sceneName);
-
-        UnityAction sceneLoadDelegate = ()=>
-        {
-            SceneManager.SetActiveScene(scene);
-            SetLocations();
-            StartCoroutine(_spawningCoroutine);
-        };
-        
-        StartCoroutine(WaitForScene(scene, sceneLoadDelegate));
+        StartCoroutine(_spawningCoroutine);
     }
 
     IEnumerator WaitForScene(Scene scene, UnityAction action)
