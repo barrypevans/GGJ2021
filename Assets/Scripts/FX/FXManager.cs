@@ -28,9 +28,13 @@ public class FXManager : SystemSingleton<FXManager>
     //Sets music to given filename
     public void SetMusic(string musicStr)
     {
+
         Debug.Log(m_fxManager);
         Debug.Log(musicStr);
         m_fxManager.GetComponent<AudioSource>().Play();
+
+        if (GameManager.Get().m_debugMusicOff) return;
+
 
         AudioClip musicClip = Resources.Load<AudioClip>(musicStr);
         m_fxManager.GetComponent<AudioSource>().clip = musicClip;
