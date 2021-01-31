@@ -8,6 +8,8 @@ public class FXManager : SystemSingleton<FXManager>
     private GameObject m_backTrackManager;
     private Dictionary<string, AudioClip> m_sfxCache;
 
+    private Queue<AudioSource> m_sfxQueue;
+
     // Start is called before the first frame update
     void Start() //Only works with Awake()???
     {
@@ -17,6 +19,12 @@ public class FXManager : SystemSingleton<FXManager>
         m_fxManager.AddComponent<AudioSource>();
         m_backTrackManager = new GameObject("MusicSource");
         m_backTrackManager.AddComponent<AudioSource>();
+
+        m_sfxQueue = new Queue<AudioSource>();
+        for(int i = 0; i < 10; i++)
+        {
+            m_sfxQueue.Enqueue(m_fxManager.AddComponent<AudioSource>());
+        }
 
         //Instantiate(m_fxManager);
         //Debug.Log("started FXManager");
@@ -58,7 +66,9 @@ public class FXManager : SystemSingleton<FXManager>
             m_sfxCache[sfxStr] = sfx;
         }
 
-        m_fxManager.GetComponent<AudioSource>().pitch = 1 + pitchBend;
-        m_fxManager.GetComponent<AudioSource>().PlayOneShot(sfx);
+        var sfxChannel = m_sfxQueue.Dequeue();
+        sfxChannel.pitch = 1 + pitchBend;
+        sfxChannel.PlayOneShot(sfx);
+        m_sfxQueue.Enqueue(sfxChannel);
     }
 }
