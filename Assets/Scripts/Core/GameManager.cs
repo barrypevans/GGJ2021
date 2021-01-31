@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : SystemSingleton<GameManager>
 {
@@ -9,8 +10,13 @@ public class GameManager : SystemSingleton<GameManager>
 
     public GameObject enemyPrefab;
 
-    public bool m_debugMusicOff;
+    public bool m_gameStarted = false;
+    public bool m_gameOver = false;
 
+    public Transform m_playerSpawn;
+    public bool m_debugMusicOff;
+    public float m_resetPlayerTimer = 10;
+    public float m_resetGameTimer = 0;
     public GameObject GetPlayer()
     {
         return m_player;
@@ -40,7 +46,7 @@ public class GameManager : SystemSingleton<GameManager>
         if (!m_player)
         {
             GameObject playerPrefab = Resources.Load<GameObject>("player");
-            m_player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
+            m_player = Instantiate(playerPrefab, m_playerSpawn.position, Quaternion.identity);
         }
     }
 
@@ -56,12 +62,45 @@ public class GameManager : SystemSingleton<GameManager>
         FXManager.Get().SetMusic("Goth_V.1");
         EnemyManager.Get().SetLocations();
         EnemyManager.Get().StartWave();
+        m_gameStarted = true;
+    }
+
+    public void ResetPlayer()
+    {
+        m_resetPlayerTimer = 0;
+        m_player.SetActive(false);
+        m_player.GetComponent<Player>().m_gun.SetActive(false);
     }
 
     public void GameOver()
     {
         //Game over Screen, music, etc
         Debug.Log("Game Over");
+        m_player.SetActive(false);
+        m_player.GetComponent<Player>().m_gun.SetActive(false);
+        m_gameOver = true;
+        m_gameStarted = false;
+    }
+
+    public void Update()
+    {
+        if(m_gameOver)
+        {
+            if (m_resetGameTimer > 2)
+                SceneManager.LoadScene(0);
+            m_resetGameTimer += Time.deltaTime;
+        }
+
+        //Respawn player logic
+        if (m_gameStarted &&
+            m_player.activeSelf == false &&
+            m_resetPlayerTimer > 2)
+        {
+            m_player.transform.position = m_playerSpawn.position;
+            m_player.SetActive(true);
+            m_player.GetComponent<Player>().m_gun.SetActive(true);
+        }
+        m_resetPlayerTimer += Time.deltaTime;
     }
 
     //------- Helpers -------
@@ -71,4 +110,5 @@ public class GameManager : SystemSingleton<GameManager>
         pos = new Vector3(pos.x, pos.y, 0);
         return pos;
     }
+
 }

@@ -6,12 +6,17 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private SpriteRenderer m_renderer;
-
+    public GameObject m_gun;
     private int health = 3;
 
     private void Awake()
     {
         m_renderer = GetComponent<SpriteRenderer>();
+    }
+
+    private void Start()
+    {
+        m_gun = Instantiate(Resources.Load<GameObject>("Gun"), transform.position, Quaternion.identity);   //Spawn the gun
     }
 
     void Update()
@@ -33,6 +38,9 @@ public class Player : MonoBehaviour
         {
             //Respawn player?
             Debug.Log("Health" + health);
+            GameManager.Get().ResetPlayer();
+            //Destroy(m_gun);
+            //Destroy(gameObject);
             //Remove heart
         }
         UiManager.Get().UpdatePlayerHealth(health);

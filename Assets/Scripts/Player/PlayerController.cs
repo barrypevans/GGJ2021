@@ -35,11 +35,7 @@ public class PlayerController : MonoBehaviour
         m_rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
-    {
-        //Spawn the gun
-        Instantiate(Resources.Load<GameObject>("Gun"), transform.position, Quaternion.identity);
-    }
+
 
     private void DoTeleport()
     {
