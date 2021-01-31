@@ -4,14 +4,6 @@ using UnityEngine;
 
 public class Bat : Enemy
 {
-    public enum EnemyState
-    {
-        MovingToPosition,
-        InPosition,
-        Attacking,
-        Dying
-    }
-
     public EnemyState State = EnemyState.MovingToPosition;
     private Transform m_currentTarget;
     private Transform m_hoverTarget;
@@ -20,7 +12,7 @@ public class Bat : Enemy
     private float _kAccel = 40f;
     private float _kMaxVelocity = 10f;
 
-    public Transform m_player;
+    private Transform m_player;
 
     private const float MaxTargetOffset = 1.5f;
 

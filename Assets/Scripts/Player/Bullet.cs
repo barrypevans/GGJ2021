@@ -7,7 +7,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject, 5.0f);
+        Destroy(gameObject, 2.0f);
     }
 
     // Update is called once per frame
@@ -22,15 +22,14 @@ public class Bullet : MonoBehaviour
         {
             collision.gameObject.GetComponent<Bat>().Kill();
             Destroy(gameObject);
-        } else // make sure bullet can't collide with player/gun?
+        } else if(collision.gameObject.tag == "Werewolf")
+        {
+            collision.gameObject.GetComponent<Werewolf>().Kill();
+            Destroy(gameObject);
+        }
+        else if (collision.gameObject != GameManager.Get().GetPlayer())
         {
             Destroy(gameObject);
         }
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if(collision.gameObject != GameManager.Get().GetPlayer())
-            Destroy(gameObject);
     }
 }

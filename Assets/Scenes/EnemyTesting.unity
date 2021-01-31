@@ -436,7 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerPosition: {fileID: 825113082}
-  Debug: 1
+  IsDebug: 0
 --- !u!4 &1955613012
 Transform:
   m_ObjectHideFlags: 0
