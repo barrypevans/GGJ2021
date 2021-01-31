@@ -201,10 +201,12 @@ public class PlayerController : MonoBehaviour
         //Maybe put up panel to show game is paused?
         Debug.Log(isPaused);
         Debug.Log(Time.timeScale);
+
         if (isPaused)
         {
             isPaused = false;
             FXManager.Get().PlaySFX("sfx/Unpause");
+            UiManager.Get().ShowPausePanel(false);
             Time.timeScale = 1;
         }
         else
@@ -212,7 +214,10 @@ public class PlayerController : MonoBehaviour
             isPaused = true;
             FXManager.Get().PlaySFX("sfx/Pause");
             Time.timeScale = 0;
+            UiManager.Get().ShowPausePanel(true);
         }
+
+        
     }
 }
 

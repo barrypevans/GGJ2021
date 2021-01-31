@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 9eeb4257410a19a4faff61b530d8194e
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Augusta
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: e9292ff8b3d6efe458cbe71e83710218, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
