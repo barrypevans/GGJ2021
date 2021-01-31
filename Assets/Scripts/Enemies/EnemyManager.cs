@@ -78,9 +78,9 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         StartCoroutine(_attackingCoroutine);
         for (int j = 0; j < totalWerewolfCount / WerewolvesPerWave; j++)
         {
-            int spawnLoc = Random.Range(0, WerewolfSpawnLocations.Length);
             for (int i = 0; i < WerewolvesPerWave; i++)
             {
+                int spawnLoc = Random.Range(0, WerewolfSpawnLocations.Length);
                 var werewolf = Instantiate(m_werewolfPrefab, WerewolfSpawnLocations[spawnLoc].position, Quaternion.identity);
                 _werewolves.Add(werewolf);
                 yield return new WaitForSeconds(1.5f);
@@ -99,8 +99,9 @@ public class EnemyManager : SystemSingleton<EnemyManager>
                 // GameManager.Get().WaveCompleted();
                 Debug.Log("Wave completed");
                 yield return new WaitForSeconds(5f);
+                StopAllCoroutines();
                 StartWave(++_wave);
-                StopCoroutine(_attackingCoroutine);
+                yield return null;
             }
 
             if (_werewolves.Count == 0) yield return new WaitForSeconds(Random.Range(1, 4));
@@ -154,7 +155,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
             {
                 var bat = eligibleBats[Random.Range(0, eligibleBats.Count)];
                 bat.GetComponent<Bat>().Attack();
-                yield return new WaitForSeconds(Random.Range(1, 4));
+                yield return new WaitForSeconds(Random.Range(3, 4));
             }
         }
     }
