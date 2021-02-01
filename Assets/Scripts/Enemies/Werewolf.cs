@@ -32,7 +32,11 @@ public class Werewolf : Enemy
         m_currentTarget = m_player;
         _stateCycler = CycleState();
         StartCoroutine(_stateCycler);
+    }
 
+    public override void  SetSkin(Power power)
+    {
+        base.SetSkin(power);
         m_runningAnim = InitAnimData("sprites/werewolf/werewolfRunning", 6);
         m_risingAnim = InitAnimData("sprites/werewolf/werewolfRising", 1);
         m_fallingAnim = InitAnimData("sprites/werewolf/werewolfFalling", 1);
