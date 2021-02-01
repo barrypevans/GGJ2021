@@ -22,8 +22,9 @@ public class Werewolf : Enemy
     IEnumerator _stateCycler;
 
     // Start is called before the first frame update
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         m_renderer = GetComponent<SpriteRenderer>();
         m_player = GameManager.Get().GetPlayer().transform;
         m_rigidbody = GetComponent<Rigidbody2D>();
@@ -34,7 +35,7 @@ public class Werewolf : Enemy
         StartCoroutine(_stateCycler);
     }
 
-    public override void  SetSkin(Power power)
+    public override void SetSkin(Power power)
     {
         base.SetSkin(power);
         m_runningAnim = InitAnimData("sprites/werewolf/werewolfRunning", 6);
