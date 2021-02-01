@@ -267,7 +267,7 @@ Transform:
   - {fileID: 1259915645}
   - {fileID: 151613018}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &151613017
 GameObject:
@@ -513,7 +513,7 @@ Transform:
   m_LocalScale: {x: 0.19974943, y: 0.2048712, z: 0.2048712}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &295926862
 GameObject:
@@ -607,7 +607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 331926488}
   m_Layer: 0
-  m_Name: PlayerSpawnPosition
+  m_Name: PlayerSpawnPosition1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -621,7 +621,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331926487}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.48, y: -0.24, z: 0}
+  m_LocalPosition: {x: -11.48, y: -0.24, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -707,7 +707,7 @@ Transform:
   m_LocalScale: {x: 0.19974943, y: 0.2048712, z: 0.2048712}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &402350760
 GameObject:
@@ -920,7 +920,7 @@ Transform:
   m_LocalScale: {x: 0.19974943, y: 0.2048712, z: 0.2048712}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &703505890
 GameObject:
@@ -1201,6 +1201,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &1142854309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1142854310}
+  m_Layer: 0
+  m_Name: PlayerSpawnPosition2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1142854310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142854309}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.48, y: -0.24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1160459153
 GameObject:
   m_ObjectHideFlags: 0
@@ -1691,7 +1721,7 @@ Transform:
   - {fileID: 1906485667}
   - {fileID: 1801904028}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1608344558
 GameObject:
@@ -1885,7 +1915,7 @@ Transform:
   m_LocalScale: {x: 0.19974943, y: 0.2048712, z: 0.2048712}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1776022041
 GameObject:
@@ -2290,7 +2320,7 @@ Transform:
   - {fileID: 402350761}
   - {fileID: 1400492665}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1998645504
 GameObject:
@@ -2372,7 +2402,7 @@ Transform:
   m_LocalScale: {x: 0.19974943, y: 0.2048712, z: 0.2048712}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2056775534
 GameObject:
@@ -2471,6 +2501,14 @@ PrefabInstance:
       propertyPath: m_playerSpawn
       value: 
       objectReference: {fileID: 331926488}
+    - target: {fileID: 8269641854689543163, guid: 686831a1f8ea4ce4a9641b27e37f4d49, type: 3}
+      propertyPath: m_playerSpawn1
+      value: 
+      objectReference: {fileID: 331926488}
+    - target: {fileID: 8269641854689543163, guid: 686831a1f8ea4ce4a9641b27e37f4d49, type: 3}
+      propertyPath: m_playerSpawn2
+      value: 
+      objectReference: {fileID: 1142854310}
     - target: {fileID: 8269641854689543163, guid: 686831a1f8ea4ce4a9641b27e37f4d49, type: 3}
       propertyPath: m_debugMusicOff
       value: 1
