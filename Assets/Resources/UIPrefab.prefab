@@ -314,7 +314,7 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Game Paused
 
-    Press "Esc" to Resume'
+    Press "P" to Resume'
 --- !u!1 &278661937683309547
 GameObject:
   m_ObjectHideFlags: 0

@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
     {
         UpdateAnims();
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
             PauseResumeGame();
 
         if (!isPaused)
