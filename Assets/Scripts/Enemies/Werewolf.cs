@@ -77,7 +77,9 @@ public class Werewolf : Enemy
     protected override void UpdateAnims()
     {
         if(State == EnemyState.MovingToPosition ||
-            State == EnemyState.MovingToPosition )
+            State == EnemyState.MovingToPosition ||
+            State == EnemyState.Attacking
+            )
         {
             m_activeAnimData = m_runningAnim;
         }

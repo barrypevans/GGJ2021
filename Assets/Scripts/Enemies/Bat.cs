@@ -93,6 +93,9 @@ public class Bat : Enemy
                 break;
         }
         DampenAccel(toTarget);
+
+        m_spriteRenderer.flipX = m_rigidbody.velocity.x < 0;
+
     }
 
     private void MoveToPosition(Vector3 toTarget)
