@@ -17,14 +17,14 @@ public class Bat : Enemy
 
     private const float MaxTargetOffset = 1.5f;
 
-    private Sprite[] m_sprites;
-    private SpriteRenderer m_spriteRenderer;
-    private int m_animIndex = 0;
-    private float kAnimFPS = 30;
-    private float m_animCounter = 0;
+    //private SpriteRenderer m_spriteRenderer;
+    //private int m_animIndex = 0;
+    //private float kAnimFPS = 30;
+    //private float m_animCounter = 0;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         m_player = GameManager.Get().GetPlayer().transform;
         m_rigidbody = GetComponent<Rigidbody2D>();
         m_targetOffset = new Vector2(
@@ -32,11 +32,7 @@ public class Bat : Enemy
             Random.Range(-MaxTargetOffset, MaxTargetOffset));
         _kAccel += Random.Range(0, 4.5f);
 
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
-        m_sprites = new Sprite[4];
-        for (int index = 0; index < 4; ++index)
-            m_sprites[index] = Resources.Load<Sprite>(string.Format("sprites/bat/bat{0}", index + 1));
-        m_animCounter = Random.Range(0, 3);
+        m_activeAnimData = InitAnimData("sprites/bat/bat", 4, 2);
     }
 
     public void Attack()
@@ -56,23 +52,23 @@ public class Bat : Enemy
         m_currentTarget = currentTarget;
     }
 
-    public void Update()
+    protected override void Update()
     {
-        UpdateAnimation();
+        base.Update();
     }
 
-    public void UpdateAnimation()
-    {
-        if(m_animCounter>1.0f/ kAnimFPS)
-        {
-            m_animCounter = 0;
-            m_animIndex++;
-            if (m_animIndex > 3)
-                m_animIndex = 0;
-            m_spriteRenderer.sprite = m_sprites[m_animIndex];
-        }
-        m_animCounter += Time.deltaTime;
-    }
+    //public void UpdateAnimation()
+    //{
+    //    if(m_animCounter>1.0f/ kAnimFPS)
+    //    {
+    //        m_animCounter = 0;
+    //        m_animIndex++;
+    //        if (m_animIndex > 3)
+    //            m_animIndex = 0;
+    //        m_spriteRenderer.sprite = m_sprites[m_animIndex];
+    //    }
+    //    m_animCounter += Time.deltaTime;
+    //}
 
     // Update is called once per frame
     private void FixedUpdate()

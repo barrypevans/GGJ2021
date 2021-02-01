@@ -15,7 +15,7 @@ public class UiManager : SystemSingleton<UiManager>
     private GameObject m_losePanel;
 
     private GameObject m_dialogs;
-    public bool IsStoryEnabled = false;
+    public bool IsStoryEnabled = true;
 
     private GameObject[] m_waveCards;
 

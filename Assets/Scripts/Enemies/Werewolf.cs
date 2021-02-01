@@ -15,6 +15,9 @@ public class Werewolf : Enemy
 
     private SpriteRenderer m_renderer;
 
+    AnimData m_runningAnim;
+    AnimData m_risingAnim;
+    AnimData m_fallingAnim;
 
     IEnumerator _stateCycler;
 
@@ -29,6 +32,10 @@ public class Werewolf : Enemy
         m_currentTarget = m_player;
         _stateCycler = CycleState();
         StartCoroutine(_stateCycler);
+
+        m_runningAnim = InitAnimData("sprites/werewolf/werewolfRunning", 6);
+        m_risingAnim = InitAnimData("sprites/werewolf/werewolfRising", 1);
+        m_fallingAnim = InitAnimData("sprites/werewolf/werewolfFalling", 1);
     }
 
     IEnumerator CycleState()
@@ -56,6 +63,27 @@ public class Werewolf : Enemy
                 }
             }
         }
+    }
+
+    protected override void UpdateAnims()
+    {
+        if(State == EnemyState.MovingToPosition ||
+            State == EnemyState.MovingToPosition )
+        {
+            m_activeAnimData = m_runningAnim;
+        }
+        else
+        {
+            if(m_rigidbody.velocity.y > 0)
+            {
+                m_activeAnimData = m_risingAnim;
+            }
+            else
+            {
+                m_activeAnimData = m_fallingAnim;
+            }
+        }
+        base.UpdateAnims();
     }
 
     public void Attack()

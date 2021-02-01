@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : Animateable
 {
     enum LateralDirection
     {
@@ -11,12 +11,6 @@ public class PlayerController : MonoBehaviour
         kRight,
         kNone
     }
-
-    class AnimData
-    {
-        public Sprite[] m_sprites;
-        public int m_spriteCount;
-    };
 
     private Rigidbody2D m_rigidbody;
 
@@ -38,46 +32,25 @@ public class PlayerController : MonoBehaviour
 
     private bool isPaused = false;
 
-    SpriteRenderer m_sprite;
 
-    private float m_animFpsTimer = 0;
-    private int m_animIndex = 0;
-    AnimData m_activeAnimData;
     AnimData m_walkAnimData;
     AnimData m_reverseWalkAnimData;
     AnimData m_idleAnimData;
     AnimData m_riseAnimData;
     AnimData m_fallAnimData;
-    void Awake()
+
+    protected override void Awake()
     {
+        base.Awake();
         m_isTeleporting = false;
         m_rigidbody = GetComponent<Rigidbody2D>();
 
-        m_sprite = GetComponent<SpriteRenderer>();
-
         m_walkAnimData = InitAnimData("sprites/player/playerWalk", 4);
-        m_reverseWalkAnimData = InitAnimData("sprites/player/playerWalk", 4, true);
-        m_idleAnimData = InitAnimData("sprites/player/playerIdle", 1);
+        m_reverseWalkAnimData = InitAnimData("sprites/player/playerWalk", 4, 1, true);
+        m_idleAnimData = InitAnimData("sprites/player/playerIdle", 4, 0.8f);
         m_riseAnimData = InitAnimData("sprites/player/playerRise", 1);
         m_fallAnimData = InitAnimData("sprites/player/playerFall", 1);
         m_activeAnimData = m_idleAnimData;
-
-
-    }
-
-    private AnimData InitAnimData(string prefix, int spriteCount, bool invert = false)
-    {
-        AnimData data = new AnimData();
-        data.m_spriteCount = spriteCount;
-        data.m_sprites = new Sprite[spriteCount];
-        for (int i = 0; i < data.m_spriteCount; ++i)
-        {
-            int index = i;
-            if (invert)
-                index = (data.m_spriteCount - 1) - i;
-            data.m_sprites[index] = Resources.Load<Sprite>(prefix + (index + 1).ToString());
-        }
-        return data;
     }
 
     private void DoTeleport()
@@ -154,9 +127,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Update()
+    protected override void Update()
     {
-        UpdateAnims();
+        base.Update();
 
         if (Input.GetKeyDown(KeyCode.P))
             PauseResumeGame();
@@ -219,7 +192,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void UpdateAnims()
+    protected override void UpdateAnims()
     {
         if (IsGrounded())
         {
@@ -249,17 +222,7 @@ public class PlayerController : MonoBehaviour
                 m_activeAnimData = m_fallAnimData;
             }
         }
-        if (m_animFpsTimer >= .1)
-        {
-            if (null == m_activeAnimData) return;
-            m_animIndex = m_animIndex % m_activeAnimData.m_spriteCount;
-
-            m_sprite.sprite = m_activeAnimData.m_sprites[m_animIndex];
-
-            m_animIndex++;
-            m_animFpsTimer = 0;
-        }
-        m_animFpsTimer += Time.deltaTime;
+        base.UpdateAnims();
     }
 
     public bool IsGrounded()
