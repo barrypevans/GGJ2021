@@ -20,7 +20,8 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bat")
         {
-            collision.gameObject.GetComponent<Bat>().Kill();
+            var bat = collision.gameObject.GetComponent<Bat>();
+            if (--bat.HitPoints == 0) bat.Kill();
             GameManager.Get().SpawnParticles(transform.position, Color.gray);
             Destroy(gameObject);
         }
@@ -30,8 +31,12 @@ public class Bullet : MonoBehaviour
     {
         if (collision.gameObject != GameManager.Get().GetPlayer())
         {
-            if(collision.gameObject.tag == "Werewolf")
-            collision.gameObject.GetComponent<Werewolf>().Kill();
+            if (collision.gameObject.tag == "Werewolf")
+            {
+                var werewolf = collision.gameObject.GetComponent<Werewolf>();
+                if(--werewolf.HitPoints == 0) 
+                    werewolf.Kill();
+            }
             GameManager.Get().SpawnParticles(transform.position, Color.gray);
             Destroy(gameObject);
         }
