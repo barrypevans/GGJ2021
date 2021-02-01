@@ -53,8 +53,12 @@ public class ButtonFuctions : MonoBehaviour
 
     public void ToggleCredits()
     {
-        FXManager.Get().PlaySFX("sfx/Menu Click 1", Random.Range(0, 2), 1F);
+        FXManager.Get().PlaySFX("sfx/Menu Click 1", Random.Range(0, 2), 1F);        
         m_creditsPanel.SetActive(!m_creditsPanel.activeSelf);
+        if(m_creditsPanel.activeSelf)
+            FXManager.Get().SetMusic("music/Ending Credits Music V.3");
+        else
+            FXManager.Get().SetMusic("music/Main Title Theme V.2");
     }
 
     public void SetWave(int wave)
