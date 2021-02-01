@@ -7,6 +7,7 @@ public class ButtonFuctions : MonoBehaviour
 {
     [SerializeField] private Transform m_ammoPanel;
     [SerializeField] private Transform m_healthPanel;
+    [SerializeField] private GameObject m_creditsPanel;
 
     private bool isPaused = false;
 
@@ -43,5 +44,10 @@ public class ButtonFuctions : MonoBehaviour
             Image image = m_healthPanel.GetChild(i).GetComponent<Image>();
             image.color = i < healthLevel ? Color.white : new Color(1, 1, 1, 0);
         }
+    }
+
+    public void ToggleCredits()
+    {
+        m_creditsPanel.SetActive(!m_creditsPanel.activeSelf);
     }
 }

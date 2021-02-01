@@ -14,7 +14,9 @@ public class GameManager : SystemSingleton<GameManager>
     public bool m_gameStarted = false;
     public bool m_gameOver = false;
 
-    public Transform m_playerSpawn;
+    public Transform m_playerSpawn1;
+    public Transform m_playerSpawn2;
+
     public bool m_debugMusicOff;
     public float m_resetPlayerTimer = 10;
     public float m_resetGameTimer = 0;
@@ -48,7 +50,7 @@ public class GameManager : SystemSingleton<GameManager>
         if (!m_player)
         {
             GameObject playerPrefab = Resources.Load<GameObject>("player");
-            m_player = Instantiate(playerPrefab, m_playerSpawn.position, Quaternion.identity);
+            m_player = Instantiate(playerPrefab, m_playerSpawn1.position, Quaternion.identity);
         }
     }
 
@@ -137,7 +139,18 @@ public class GameManager : SystemSingleton<GameManager>
             m_player.activeSelf == false &&
             m_resetPlayerTimer > 2)
         {
-            m_player.transform.position = m_playerSpawn.position;
+            Transform[] enemyTargetLocations = EnemyManager.Get().GetTargetLocations();
+            float distFromPlayerSpawn1 = 0F;
+            float distFromPlayerSpawn2 = 0F;
+            for (int i = 0; i < enemyTargetLocations.Length; i++)
+            {
+                distFromPlayerSpawn1 += Vector3.Distance(m_playerSpawn1.position, enemyTargetLocations[i].position);
+                distFromPlayerSpawn2 += distFromPlayerSpawn2 + Vector3.Distance(m_playerSpawn2.position, enemyTargetLocations[i].position);
+            }
+            if (distFromPlayerSpawn1 > distFromPlayerSpawn2)
+                m_player.transform.position = m_playerSpawn1.position;
+            else
+                m_player.transform.position = m_playerSpawn2.position;
             m_player.SetActive(true);
             m_player.GetComponent<Player>().m_gun.SetActive(true);
         }
