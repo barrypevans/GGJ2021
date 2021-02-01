@@ -15,7 +15,8 @@ public class UiManager : SystemSingleton<UiManager>
     private GameObject m_losePanel;
 
     private GameObject m_dialogs;
-    public bool IsStoryEnabled = true;
+    public bool IsStoryEnabled = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +57,7 @@ public class UiManager : SystemSingleton<UiManager>
         {
             var dialog = sequence.transform.GetChild(i).gameObject;
             dialog.SetActive(true);
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(3);
             dialog.SetActive(false);
         }
         m_dialogs.SetActive(false);

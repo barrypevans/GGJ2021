@@ -10,6 +10,12 @@ public class ButtonFuctions : MonoBehaviour
 
     private bool isPaused = false;
 
+    public void ToggleStoryMode()
+    {
+        UiManager.Get().IsStoryEnabled = !UiManager.Get().IsStoryEnabled;
+        Debug.Log("Story mode: " + UiManager.Get().IsStoryEnabled);
+    }
+
     public void StartGameplay()
     {
         GameManager.Get().StartGameplay();

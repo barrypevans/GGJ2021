@@ -26,6 +26,11 @@ public class EnemyManager : SystemSingleton<EnemyManager>
 
     private int _wave = 0; // manage this in game manager?
 
+    public Transform[] GetTargetLocations()
+    {
+        return TargetLocations;
+    }
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -158,7 +163,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
             {
                 var bat = eligibleBats[Random.Range(0, eligibleBats.Count)];
                 bat.GetComponent<Bat>().Attack();
-                yield return new WaitForSeconds(Random.Range(3, 4));
+                yield return new WaitForSeconds(Random.Range(1, 3));
             }
         }
     }
