@@ -36,6 +36,8 @@ public class Werewolf : Enemy
 
     public override void  SetSkin(Power power)
     {
+        EnemyPower = power;
+        if (power == Power.Hard) HitPoints = 2;
         base.SetSkin(power);
         m_runningAnim = InitAnimData("sprites/werewolf/werewolfRunning", 6);
         m_risingAnim = InitAnimData("sprites/werewolf/werewolfRising", 1);

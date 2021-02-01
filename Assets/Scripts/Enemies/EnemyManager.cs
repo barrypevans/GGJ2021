@@ -92,6 +92,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
             {
                 int spawnLoc = Random.Range(0, WerewolfSpawnLocations.Length);
                 var werewolf = Instantiate(m_werewolfPrefab, WerewolfSpawnLocations[spawnLoc].position, Quaternion.identity);
+                if (Random.Range(0, 10) < 3) werewolf.GetComponent<Werewolf>().SetSkin(Enemy.Power.Hard);
                 _werewolves.Add(werewolf);
                 yield return new WaitForSeconds(1.5f);
             }
@@ -135,6 +136,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
             {
                 var bat = Instantiate(m_batPrefab, BatSpawnLocations[spawnLoc].position, Quaternion.identity);
                 bat.GetComponent<Bat>().SetTarget(TargetLocations[targetLoc]);
+                if (Random.Range(0, 10) < 5) bat.GetComponent<Bat>().SetSkin(Enemy.Power.Hard);
                 _bats.Add(bat);
                 yield return new WaitForSeconds(.2f);
             }

@@ -33,9 +33,11 @@ public class Bat : Enemy
         _kAccel += Random.Range(0, 4.5f);
     }
 
-    public override void SetSkin(Power powerlevel)
+    public override void SetSkin(Power power)
     {
-        base.SetSkin(powerlevel);
+        EnemyPower = power;
+        if (power == Power.Hard) HitPoints = 2;
+        base.SetSkin(power);
         m_activeAnimData = InitAnimData("sprites/bat/bat", 4, 2);
     }
 
