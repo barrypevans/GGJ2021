@@ -64,7 +64,7 @@ public class GameManager : SystemSingleton<GameManager>
         UiManager.Get().ShowGameplayPanel();
         //FXManager.Get().PlaySFX("Pause");
         UiManager.Get().PlayStory(0);
-        FXManager.Get().SetMusic(null);
+        //FXManager.Get().SetMusic(null);
     }
 
     public void StoryCompleted(int story)

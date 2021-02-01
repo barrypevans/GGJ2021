@@ -22,8 +22,8 @@ public class Enemy : Animateable
     public Power EnemyPower = Power.Easy;
 
     private Vector2 _startPosition;
-    // Start is called before the first frame update
-    void Start()
+
+    protected virtual void Start()
     {
         _startPosition = transform.position;
         SetSkin(EnemyPower);
