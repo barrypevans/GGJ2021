@@ -58,11 +58,6 @@ public class Bat : Enemy
         m_currentTarget = currentTarget;
     }
 
-    protected override void Update()
-    {
-        base.Update();
-    }
-
     //public void UpdateAnimation()
     //{
     //    if(m_animCounter>1.0f/ kAnimFPS)

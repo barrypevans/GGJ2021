@@ -20,6 +20,9 @@ public class Enemy : Animateable
 
     public int HitPoints = 1;
     public Power EnemyPower = Power.Easy;
+    private int flashCooldown = 0;
+    private float flashPause = 0;
+    private bool flashing = false;
 
     private Vector2 _startPosition;
 
@@ -27,6 +30,31 @@ public class Enemy : Animateable
     {
         _startPosition = transform.position;
         SetSkin(EnemyPower);
+    }
+
+    public void DoFlash()
+    {
+        flashing = true;
+    }
+        
+    protected override void Update()
+    {
+        base.Update();
+        if (flashPause > .05f)
+        {
+            if (flashing)
+            {
+                flashCooldown++;
+            }
+            if (flashCooldown >= 10)
+            {
+                flashing = false;
+                flashCooldown = 0;
+            }
+            m_spriteRenderer.color = flashCooldown % 2 == 0 ? Color.white : Color.red;
+            flashPause = 0;
+        }
+        flashPause += Time.deltaTime;
     }
 
     public virtual void SetSkin(Power powerlevel)

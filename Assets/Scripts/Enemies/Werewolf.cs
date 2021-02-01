@@ -24,6 +24,7 @@ public class Werewolf : Enemy
     // Start is called before the first frame update
     protected override void Start()
     {
+        m_spriteRenderer.enabled = false;
         base.Start();
         m_renderer = GetComponent<SpriteRenderer>();
         m_player = GameManager.Get().GetPlayer().transform;
@@ -43,6 +44,7 @@ public class Werewolf : Enemy
         m_runningAnim = InitAnimData("sprites/werewolf/werewolfRunning", 6);
         m_risingAnim = InitAnimData("sprites/werewolf/werewolfRising", 1);
         m_fallingAnim = InitAnimData("sprites/werewolf/werewolfFalling", 1);
+        m_spriteRenderer.enabled = true;
     }
 
     IEnumerator CycleState()

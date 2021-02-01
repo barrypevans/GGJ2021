@@ -21,6 +21,7 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.tag == "Bat")
         {
             var bat = collision.gameObject.GetComponent<Bat>();
+            bat.DoFlash();
             if (--bat.HitPoints == 0) bat.Kill();
             GameManager.Get().SpawnParticles(transform.position, Color.gray);
             Destroy(gameObject);
@@ -34,7 +35,8 @@ public class Bullet : MonoBehaviour
             if (collision.gameObject.tag == "Werewolf")
             {
                 var werewolf = collision.gameObject.GetComponent<Werewolf>();
-                if(--werewolf.HitPoints == 0) 
+                werewolf.DoFlash();
+                if (--werewolf.HitPoints == 0) 
                     werewolf.Kill();
             }
             GameManager.Get().SpawnParticles(transform.position, Color.gray);
