@@ -15,17 +15,20 @@ public class ButtonFuctions : MonoBehaviour
 
     public void ToggleStoryMode()
     {
+        FXManager.Get().PlaySFX("sfx/End Clip 1", 0F, 0.3F);
         UiManager.Get().IsStoryEnabled = !UiManager.Get().IsStoryEnabled;
         Debug.Log("Story mode: " + UiManager.Get().IsStoryEnabled);
     }
 
     public void StartGameplay()
     {
+        FXManager.Get().PlaySFX("sfx/End Clip 1", 0F, 0.3F);
         GameManager.Get().StartGameplay();
     }
 
     public void ExitApplication()
     {
+        FXManager.Get().PlaySFX("sfx/End Clip 1", 0F, 0.3F);
         //Debug.Log("Quitting Application");
         Application.Quit();
     }
@@ -50,6 +53,7 @@ public class ButtonFuctions : MonoBehaviour
 
     public void ToggleCredits()
     {
+        FXManager.Get().PlaySFX("sfx/End Clip 1", 0F, 0.3F);
         m_creditsPanel.SetActive(!m_creditsPanel.activeSelf);
     }
 
