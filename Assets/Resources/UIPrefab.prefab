@@ -114,7 +114,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3191676163273753442
 CanvasRenderer:
@@ -581,7 +581,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 200}
+  m_SizeDelta: {x: 300, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5994765652567718839
 CanvasRenderer:
@@ -1578,7 +1578,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "I can\u2019t believe I survived."
+  m_Text: "l can\u2019t believe l survived."
 --- !u!1 &1602142955403149282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1736,7 +1736,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "I\u2019m completely lost."
+  m_Text: "l\u2019m completely lost."
 --- !u!1 &1760283963499739712
 GameObject:
   m_ObjectHideFlags: 0
@@ -1815,7 +1815,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "It\u2019s almost like I\u2019ve done this before\u2026"
+  m_Text: "lt\u2019s almost like l\u2019ve done this before\u2026"
 --- !u!1 &1797778399079893820
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,7 +1973,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Wait a second, I hear something\u2026"
+  m_Text: "Wait a second, l hear something\u2026"
 --- !u!1 &2076056620507357963
 GameObject:
   m_ObjectHideFlags: 0
@@ -2716,7 +2716,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'I feel so alive! '
+  m_Text: 'l feel so alive! '
 --- !u!1 &3809813026992399252
 GameObject:
   m_ObjectHideFlags: 0
@@ -3214,7 +3214,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "I\u2019m glad to have cleared this cathedral of those wretched hounds..."
+  m_Text: "l\u2019m glad to have cleared this cathedral of those wretched hounds..."
 --- !u!1 &4442406277152386314
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,7 +3447,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "Who am I\u2026?"
+  m_Text: "Who am l\u2026?"
 --- !u!1 &5627702029726197962
 GameObject:
   m_ObjectHideFlags: 0
@@ -3775,7 +3775,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Where did I get this gun?!
+  m_Text: Where did l get this gun?!
 --- !u!1 &6173711437531408662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4219,7 +4219,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "I remember now\u2026 I\u2019m a monster hunter! "
+  m_Text: "l remember now\u2026 l\u2019m a monster hunter! "
 --- !u!1 &6573318229093760413
 GameObject:
   m_ObjectHideFlags: 0
@@ -4779,7 +4779,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: I came here to rid the world of these evil demons.
+  m_Text: l came here to rid the world of these evil demons.
 --- !u!1 &8505590694411369000
 GameObject:
   m_ObjectHideFlags: 0
@@ -5009,7 +5009,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Maybe I have?
+  m_Text: Maybe l have?
 --- !u!1 &9106755401012183056
 GameObject:
   m_ObjectHideFlags: 0
