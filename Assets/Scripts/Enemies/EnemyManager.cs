@@ -18,7 +18,6 @@ public class EnemyManager : SystemSingleton<EnemyManager>
     private List<GameObject> _bats = new List<GameObject>();
     private List<GameObject> _werewolves = new List<GameObject>();
     private bool _isWaveFullySpawned;
-    private IEnumerator _spawningCoroutine;
     private IEnumerator _attackingCoroutine;
 
     private GameObject m_batPrefab;
@@ -66,19 +65,19 @@ public class EnemyManager : SystemSingleton<EnemyManager>
         switch (wave)
         {
             case 0:
-                _spawningCoroutine = SpawnWerewolves(10);
+                StartCoroutine(SpawnWerewolves(10));
                 break;
             case 1:
-                _spawningCoroutine = SpawnBats(20);
+                StartCoroutine(SpawnBats(20));
                 break;
             case 2:
-                _spawningCoroutine = SpawnBats(20);
+                StartCoroutine(SpawnBats(20));
+                StartCoroutine(SpawnWerewolves(20));
                 break;
             case 3:
                 //Win condition!
                 break;
         }
-        StartCoroutine(_spawningCoroutine);
     }
 
     IEnumerator SpawnWerewolves(int totalWerewolfCount)
@@ -103,7 +102,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
     {
         while (true)
         {
-            if (_isWaveFullySpawned && _werewolves.Count == 0)
+            if (_isWaveFullySpawned && _werewolves.Count == 0 && _bats.Count == 0)
             {
                 Debug.Log("Wave completed");
                 yield return new WaitForSeconds(5f);
@@ -146,7 +145,7 @@ public class EnemyManager : SystemSingleton<EnemyManager>
     {
         while (true)
         {
-            if (_isWaveFullySpawned && _bats.Count == 0)
+            if (_isWaveFullySpawned && _bats.Count == 0 && _werewolves.Count == 0)
             {
                 Debug.Log("Wave completed");
                 yield return new WaitForSeconds(5f);
