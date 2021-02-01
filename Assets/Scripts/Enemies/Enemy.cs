@@ -26,5 +26,18 @@ public class Enemy : Animateable
     void Start()
     {
         _startPosition = transform.position;
+        SetSkin(EnemyPower);
+    }
+
+    public virtual void SetSkin(Power powerlevel)
+    {
+        if(powerlevel == Power.Easy)
+        {
+            m_variantId = "";
+        }
+        else
+        {
+            m_variantId = "Var";
+        }
     }
 }
