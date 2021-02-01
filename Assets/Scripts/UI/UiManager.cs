@@ -17,6 +17,8 @@ public class UiManager : SystemSingleton<UiManager>
     private GameObject m_dialogs;
     public bool IsStoryEnabled = false;
 
+    private GameObject[] m_waveCards;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,17 +37,36 @@ public class UiManager : SystemSingleton<UiManager>
         // story
         m_dialogs = canvas.GetChild(3).gameObject;
         m_dialogs.SetActive(false);
+        // wave cards
+        //var waveCardParent = canvas.GetChild(6).gameObject;
+        //m_waveCards = new GameObject[waveCardParent.transform.childCount];
+        //for(int i = 0; i < m_waveCards.Length; i++)
+        //{
+        //    m_waveCards[i] = waveCardParent.transform.GetChild(i).gameObject;
+        //}
     }
 
     public void PlayStory(int story)
     {
-        if(!IsStoryEnabled)
+        StopAllCoroutines();
+        if (!IsStoryEnabled)
         {
-            GameManager.Get().StoryCompleted(story);
+            StartCoroutine(ShowWaveCard(story));
             return;
         }
-        StopAllCoroutines();
         StartCoroutine(ShowDialogs(story));
+    }
+
+    private IEnumerator ShowWaveCard(int card)
+    {
+        if (m_waveCards != null && card < 3)
+        {
+            m_waveCards[card].SetActive(true);
+            yield return new WaitForSeconds(1);
+            m_waveCards[card].SetActive(false);
+        }
+        GameManager.Get().StoryCompleted(card);
+        yield return null;
     }
 
     private IEnumerator ShowDialogs(int story)
@@ -60,6 +81,14 @@ public class UiManager : SystemSingleton<UiManager>
             yield return new WaitForSeconds(3);
             dialog.SetActive(false);
         }
+
+        if (m_waveCards != null && story < 3)
+        {
+            m_waveCards[story].SetActive(true);
+            yield return new WaitForSeconds(1);
+            m_waveCards[story].SetActive(false);
+        }
+
         m_dialogs.SetActive(false);
         GameManager.Get().StoryCompleted(story);
         yield return null;
