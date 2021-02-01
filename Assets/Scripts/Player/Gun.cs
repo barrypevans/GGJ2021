@@ -79,7 +79,7 @@ public class Gun : MonoBehaviour
         }
         
         m_regenCooldown += Time.deltaTime;
-        if(m_regenCooldown >  .3f)
+        if(m_regenCooldown >  .2f)
         {
             m_regenCooldown = 0;
             m_remainingBullets++;

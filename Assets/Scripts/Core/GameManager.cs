@@ -127,15 +127,10 @@ public class GameManager : SystemSingleton<GameManager>
 
     public void Update()
     {
-        if(m_gameOver)
-        {
-            if (m_resetGameTimer > 2)
-                SceneManager.LoadScene(0);
-            m_resetGameTimer += Time.deltaTime;
-        }
 
         //Respawn player logic
         if (m_gameStarted &&
+            !m_gameOver &&
             m_player.activeSelf == false &&
             m_resetPlayerTimer > 2)
         {
@@ -169,6 +164,7 @@ public class GameManager : SystemSingleton<GameManager>
     IEnumerator Co_WinCard()
     {
         // pop up win card here
+        m_gameOver = true;
         UiManager.Get().ShowWinPanel(true);
         yield return new WaitForSeconds(21);
         UiManager.Get().ShowWinPanel(false);
@@ -178,10 +174,10 @@ public class GameManager : SystemSingleton<GameManager>
     IEnumerator Co_LoseCard()
     {
         // pop up win card here
+        m_gameOver = true;
         UiManager.Get().ShowLosePanel(true);
         yield return new WaitForSeconds(6);
         UiManager.Get().ShowLosePanel(false);
-        m_gameOver = true;
         m_gameStarted = false;
         SceneManager.LoadScene(0);
     }
