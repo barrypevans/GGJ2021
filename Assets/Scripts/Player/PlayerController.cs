@@ -248,14 +248,15 @@ public class PlayerController : Animateable
     public void PauseResumeGame()
     {
         //Maybe put up panel to show game is paused?
-        Debug.Log(isPaused);
-        Debug.Log(Time.timeScale);
+        //Debug.Log(isPaused);
+        //Debug.Log(Time.timeScale);
 
         if (isPaused)
         {
             isPaused = false;
             FXManager.Get().PlaySFX("sfx/Unpause", 0F, 0.5F);
             UiManager.Get().ShowPausePanel(false);
+            UiManager.Get().PauseResumeDialog(true);
             Time.timeScale = 1;
         }
         else
@@ -263,6 +264,7 @@ public class PlayerController : Animateable
             isPaused = true;
             FXManager.Get().PlaySFX("sfx/Pause", 0F, 0.5F);
             Time.timeScale = 0;
+            UiManager.Get().PauseResumeDialog(false);
             UiManager.Get().ShowPausePanel(true);
         }
 

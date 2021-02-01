@@ -19,6 +19,8 @@ public class UiManager : SystemSingleton<UiManager>
 
     private GameObject[] m_waveCards;
 
+    private bool dialogsRunning = false; //Flag for whether there is dialog running
+
     // Start is called before the first frame update
     void Start()
     {
@@ -71,6 +73,7 @@ public class UiManager : SystemSingleton<UiManager>
 
     private IEnumerator ShowDialogs(int story)
     {
+        dialogsRunning = true;
         m_dialogs.SetActive(true);
         // first child is background image so add 1
         var sequence = m_dialogs.transform.GetChild(story+1).gameObject;
@@ -91,6 +94,7 @@ public class UiManager : SystemSingleton<UiManager>
 
         m_dialogs.SetActive(false);
         GameManager.Get().StoryCompleted(story);
+        dialogsRunning = false;
         yield return null;
     }
 
@@ -98,6 +102,14 @@ public class UiManager : SystemSingleton<UiManager>
     {
         m_mainMenuPanel.SetActive(false);  //Hides the main menu
         m_gameplayPanel.SetActive(true);  //Unhides the gameplay UI
+    }
+
+    //Hides the dialoge panel if the game is paused, brings it back up if game resumes
+    public void PauseResumeDialog(bool isPaused)
+    {
+        //Only works if dialog is currently being run.    
+        if(dialogsRunning)
+            m_dialogs.SetActive(isPaused);
     }
 
     public void ShowPausePanel(bool isPaused)
