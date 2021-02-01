@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : Animateable
 {
     public enum EnemyState
     {
@@ -18,10 +18,5 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         _startPosition = transform.position;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
     }
 }

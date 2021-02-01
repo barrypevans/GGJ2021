@@ -21,19 +21,18 @@ public class Bullet : MonoBehaviour
         if (collision.gameObject.tag == "Bat")
         {
             collision.gameObject.GetComponent<Bat>().Kill();
+            GameManager.Get().SpawnParticles(transform.position, Color.gray);
             Destroy(gameObject);
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Werewolf")
+        if (collision.gameObject != GameManager.Get().GetPlayer())
         {
+            if(collision.gameObject.tag == "Werewolf")
             collision.gameObject.GetComponent<Werewolf>().Kill();
-            Destroy(gameObject);
-        }
-        else if (collision.gameObject != GameManager.Get().GetPlayer())
-        {
+            GameManager.Get().SpawnParticles(transform.position, Color.gray);
             Destroy(gameObject);
         }
     }
