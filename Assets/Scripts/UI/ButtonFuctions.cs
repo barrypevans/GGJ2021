@@ -8,6 +8,8 @@ public class ButtonFuctions : MonoBehaviour
     [SerializeField] private Transform m_ammoPanel;
     [SerializeField] private Transform m_healthPanel;
     [SerializeField] private GameObject m_creditsPanel;
+    [SerializeField] private Image m_waveImage;
+    [SerializeField] private Sprite[] m_waveImages;
 
     private bool isPaused = false;
 
@@ -49,5 +51,11 @@ public class ButtonFuctions : MonoBehaviour
     public void ToggleCredits()
     {
         m_creditsPanel.SetActive(!m_creditsPanel.activeSelf);
+    }
+
+    public void SetWave(int wave)
+    {
+        if(wave<3)
+            m_waveImage.sprite = m_waveImages[wave];
     }
 }

@@ -59,6 +59,8 @@ public class EnemyManager : SystemSingleton<EnemyManager>
 
     public void StartWave(int wave = 0) // change bat properties based on wave?
     {
+        UiManager.Get().SetWaveImage(wave);
+
         _wave = wave;
         Debug.Log("Starting wave: " + wave);
         _isWaveFullySpawned = false;

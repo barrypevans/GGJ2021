@@ -125,4 +125,8 @@ public class UiManager : SystemSingleton<UiManager>
         m_ui.GetComponent<ButtonFuctions>().SetAmmoLevel(ammoLevel);
     }
 
+    public void SetWaveImage(int wave)
+    {
+        m_ui.GetComponent<ButtonFuctions>().SetWave(wave);
+    }
 }
