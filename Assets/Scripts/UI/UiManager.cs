@@ -15,7 +15,7 @@ public class UiManager : SystemSingleton<UiManager>
     private GameObject m_losePanel;
 
     private GameObject m_dialogs;
-    public bool IsStoryEnabled = false;
+    public bool IsStoryEnabled = true;
 
     // Start is called before the first frame update
     void Start()
