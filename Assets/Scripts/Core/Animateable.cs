@@ -31,9 +31,9 @@ public class Animateable : MonoBehaviour
 
     virtual protected void UpdateAnims()
     {
+        if (null == m_activeAnimData) return;
         if (m_animFpsTimer >= .1 / m_activeAnimData.m_animSpeed)
         {
-            if (null == m_activeAnimData) return;
             m_animIndex = m_animIndex % m_activeAnimData.m_spriteCount;
 
             m_spriteRenderer.sprite = m_activeAnimData.m_sprites[m_animIndex];

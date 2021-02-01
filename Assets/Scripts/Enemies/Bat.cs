@@ -31,7 +31,11 @@ public class Bat : Enemy
             Random.Range(-MaxTargetOffset, MaxTargetOffset), 
             Random.Range(-MaxTargetOffset, MaxTargetOffset));
         _kAccel += Random.Range(0, 4.5f);
+    }
 
+    public override void SetSkin(Power powerlevel)
+    {
+        base.SetSkin(powerlevel);
         m_activeAnimData = InitAnimData("sprites/bat/bat", 4, 2);
     }
 
